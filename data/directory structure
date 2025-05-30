@@ -1,0 +1,11 @@
+# Create data directories
+mkdir -p data/knowledge_base
+mkdir -p data/conversation_logs  
+mkdir -p data/persona_memories
+mkdir -p data/templates
+
+# Add placeholder files
+echo "# Historical Knowledge Base" > data/knowledge_base/README.md
+echo "# Conversation Logs" > data/conversation_logs/README.md
+echo "# Persona Memories" > data/persona_memories/README.md
+echo "# Response Templates" > data/templates/README.md
