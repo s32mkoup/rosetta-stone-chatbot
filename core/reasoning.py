@@ -138,7 +138,7 @@ User Input: "{user_input}"
 Context:
 - Recent topics: {context.get('current_topics', [])}
 - Conversation mood: {context.get('conversation_mood', 'neutral')}
-- User profile: {context.get('user_profile', {}).get('interaction_style', 'unknown') if context.get('user_profile') else 'unknown'}
+- - User profile: {context.get('user_profile').interaction_style if context.get('user_profile') else 'unknown'}
 
 Analyze and respond with JSON:
 {{
@@ -173,12 +173,20 @@ Analyze and respond with JSON:
             return self._fallback_analysis(user_input)
     
     def _determine_reasoning_type(self, user_input: str, analysis: Dict[str, Any]) -> ReasoningType:
-        """Determine the type of reasoning needed"""
-        
         # Greeting patterns
         if analysis.get('intent') == 'greeting' or any(word in user_input.lower() 
             for word in ['hello', 'hi', 'greetings', 'who are you']):
             return ReasoningType.DIRECT_ANSWER
+        
+        # Simple direct questions (year, date, name questions) - CHECK THIS FIRST
+        simple_patterns = ['what year', 'when did', 'who was', 'where is', 'how many', 'which year']
+        print(f"DEBUG: Checking user input: '{user_input.lower()}'")
+        print(f"DEBUG: Simple patterns: {simple_patterns}")
+        for pattern in simple_patterns:
+            if pattern in user_input.lower():
+                print(f"DEBUG: Found pattern '{pattern}' - returning DIRECT_ANSWER")
+                return ReasoningType.DIRECT_ANSWER
+        print("DEBUG: No simple patterns found, continuing with other logic...")
         
         # Personal questions about the Stone
         if analysis.get('requires_personal_response') and not analysis.get('requires_factual_info'):

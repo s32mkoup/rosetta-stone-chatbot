@@ -1,7 +1,7 @@
 from typing import Dict, List, Any, Optional, TypedDict
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.sqlite import SqliteSaver
-from ..core.config import Config
+from core.config import Config
 
 class AgentState(TypedDict):
     """State definition for LangGraph agent"""

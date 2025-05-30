@@ -96,16 +96,16 @@ class MemoryConfig:
 
 @dataclass
 class PersonaConfig:
-    persona_depth: PersonaDepth = PersonaDepth.RICH
+    persona_depth: PersonaDepth = PersonaDepth.STANDARD
     emotional_responses: bool = True
     historical_accuracy: HistoricalAccuracy = HistoricalAccuracy.STRICT
     poetic_language: bool = True
     nostalgic_tone: bool = True
     ancient_wisdom_style: bool = True
-    sensory_descriptions: bool = True
-    response_length_preference: str = "detailed"
-    metaphor_frequency: str = "high"
-    historical_context_depth: str = "deep"
+    sensory_descriptions: bool = False
+    response_length_preference: str = "standard"
+    metaphor_frequency: str = "medium"
+    historical_context_depth: str = "moderate"
 
 @dataclass
 class InterfaceConfig:

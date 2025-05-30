@@ -1,0 +1,26 @@
+{
+  "default_user": {
+    "user_id": "default_user",
+    "first_interaction": "2025-05-30T14:46:54.730339",
+    "last_interaction": "2025-05-30T16:36:24.241854",
+    "total_conversations": 11,
+    "favorite_topics": [
+      "ancient_egypt",
+      "history",
+      "languages",
+      "rosetta_stone",
+      "ptolemy"
+    ],
+    "interaction_style": "curious",
+    "preferred_response_length": "standard",
+    "historical_interests": {
+      "ancient_egypt": 11,
+      "ptolemy": 5,
+      "languages": 7,
+      "history": 11,
+      "rosetta_stone": 6,
+      "archaeology": 4
+    },
+    "language_preference": "english"
+  }
+}

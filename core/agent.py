@@ -106,7 +106,8 @@ class RosettaStoneAgent:
     def _initialize_tools(self):
         """Initialize and register all available tools"""
         # Import tools dynamically based on configuration
-        from ..tools.tool_registry import get_available_tools
+        from tools.tool_registry import get_available_tools
+
 
         
         available_tools = get_available_tools(self.config)
@@ -384,12 +385,13 @@ class RosettaStoneAgent:
                              personality_context: Dict[str, Any]) -> str:
         """Build comprehensive prompt for response generation"""
         
-        from ..persona.rosetta_persona import RosettaPersona
+        from persona.rosetta_persona import RosettaPersona
         
         prompt_parts = []
         
         # 1. Base persona
-        prompt_parts.append(RosettaPersona.get_system_prompt(self.config))
+        persona = RosettaPersona(self.config)
+        prompt_parts.append(persona.get_system_prompt(self.config))
         
         # 2. Personality context from memory
         if personality_context.get('wisdom_gained'):
@@ -432,8 +434,10 @@ class RosettaStoneAgent:
         
         # 7. User input and response instruction
         prompt_parts.append(f"\nUser asks: \"{user_input}\"")
-        prompt_parts.append("\nRespond as the Rosetta Stone with wisdom, poetry, and authenticity. Use the gathered information naturally within your ancient voice.")
-        
+        if reasoning_result.reasoning_type == ReasoningType.DIRECT_ANSWER:
+         prompt_parts.append("\nResponse style: Provide a direct, concise answer with light persona flavor. Keep responses under 3 sentences unless more detail is requested.")
+        else:
+         prompt_parts.append("\nRespond as the Rosetta Stone with wisdom, poetry, and authenticity. Use the gathered information naturally within your ancient voice.")        
         return "\n".join(prompt_parts)
     
     async def _extract_topics(self, user_input: str, response_content: str) -> List[str]:
