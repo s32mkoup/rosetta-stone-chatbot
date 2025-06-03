@@ -3,6 +3,10 @@ huggingface_hub>=0.20.0
 requests>=2.31.0
 python-dotenv>=1.0.0
 
+# Flask web dependencies (NEW)
+flask>=2.3.3
+flask-cors>=4.0.0
+
 # Interface dependencies
 gradio>=4.0.0
 asyncio-mqtt>=0.13.0
