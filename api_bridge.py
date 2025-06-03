@@ -79,7 +79,17 @@ def send_message():
         
         # Update framework if changed
         if hasattr(agent.config.agent, 'framework'):
-            agent.config.agent.framework = framework
+            from core.config import Framework 
+            framework_map = {
+        'smolagents': Framework.SMOLAGENTS,
+        'llamaindex': Framework.LLAMAINDEX, 
+        'langgraph': Framework.LANGGRAPH
+    }
+            if framework in framework_map:
+                agent.config.agent.framework = framework_map[framework]
+            print(f"✅ Framework switched to: {framework}")
+        else:
+            print(f"⚠️ Unknown framework: {framework}, keeping current")
         
         # Process message with the real agent
         response = asyncio.run(agent.process_message(message))
@@ -129,9 +139,21 @@ def switch_framework():
         data = request.get_json()
         framework = data.get('framework', 'smolagents')
         
-        # Update framework in config
+        # Update framework in config (convert string to proper enum)
         if hasattr(agent.config.agent, 'framework'):
-            agent.config.agent.framework = framework
+            from core.config import Framework
+            
+            framework_map = {
+                'smolagents': Framework.SMOLAGENTS,
+                'llamaindex': Framework.LLAMAINDEX,
+                'langgraph': Framework.LANGGRAPH
+            }
+            
+            if framework in framework_map:
+                agent.config.agent.framework = framework_map[framework]
+                print(f"✅ Framework switched to: {framework}")
+            else:
+                print(f"⚠️ Unknown framework: {framework}, keeping current")
         
         return jsonify({
             'success': True,
@@ -143,10 +165,10 @@ def switch_framework():
             'success': False,
             'error': str(e)
         }), 500
-
 if __name__ == '__main__':
     print("🏺 Starting Rosetta Stone Agent API Bridge...")
-    print("🌐 UI will be available at: http://localhost:5000")
-    print("🔗 API endpoints available at: http://localhost:5000/api/")
+    print("🌐 UI will be available at: http://localhost:8080")  # Change this
+    print("🔗 API endpoints available at: http://localhost:8080/api/") 
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
+

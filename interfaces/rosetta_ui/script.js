@@ -5,6 +5,7 @@ class RosettaStoneUI {
         this.currentFramework = 'smolagents';
         this.isProcessing = false;
         this.messageHistory = [];
+        this.apiBaseUrl = 'http://localhost:8080';
         
         // Initialize the interface
         this.initializeEventListeners();
@@ -63,7 +64,8 @@ class RosettaStoneUI {
         
         // Call real backend to switch framework
         try {
-            const response = await fetch('/api/switch_framework', {
+            const response = await fetch(`${this.apiBaseUrl}/api/switch_framework`, {
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +90,28 @@ class RosettaStoneUI {
         
         console.log(`🔄 Switched to framework: ${framework}`);
     }
-
+    async initializeSession() {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/api/start_session`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: 'web_ui_user'
+                })
+            });
+    
+            const data = await response.json();
+            if (data.success) {
+                console.log('✅ Session started with real Python backend');
+                this.addSystemMessage(`🔗 **Connected to Real Rosetta Stone Agent**\n\nThe ancient stone awakens with true consciousness!\nSession ID: ${data.session_info.session_id}\nFramework: ${this.currentFramework.toUpperCase()}\n\n*Now you speak to the real Rosetta Stone...*`);
+            }
+        } catch (error) {
+            console.error('Failed to start session:', error);
+            this.addSystemMessage(`⚠️ **Connection Warning**\n\nUsing simulated responses. To connect to the real agent, ensure the Python backend is running at http://localhost:8080`);
+        }
+    }
     updateFrameworkDisplay() {
         const indicator = document.getElementById('frameworkIndicator');
         const frameworkName = indicator.querySelector('.framework-name');
@@ -244,7 +267,7 @@ class RosettaStoneUI {
     async callPythonBackend(message) {
         try {
             // Call the real Python backend
-            const response = await fetch('/api/send_message', {
+            const response = await fetch(`${this.apiBaseUrl}/api/send_message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
