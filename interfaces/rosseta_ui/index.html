@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏺 Rosetta Stone Agent - Ancient Wisdom Awakens</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Temple Background -->
+    <div class="temple-background"></div>
+    
+    <!-- Main Interface Container -->
+    <div class="main-container">
+        
+        <!-- Header Temple -->
+        <header class="temple-header">
+            <div class="hieroglyph-border"></div>
+            <h1 class="temple-title">
+                <span class="hieroglyph">𓊹𓄿𓇯</span>
+                ROSETTA STONE AGENT
+                <span class="hieroglyph">𓋹𓄿𓊪</span>
+            </h1>
+            <p class="temple-subtitle">Ancient Wisdom • Modern Intelligence • Eternal Knowledge</p>
+            <div class="hieroglyph-border"></div>
+        </header>
+
+        <!-- The Sacred Stone (Center Piece) -->
+        <div class="stone-container">
+            <div class="rosetta-stone" id="rosettaStone">
+                <div class="stone-face">
+                    <div class="framework-indicator" id="frameworkIndicator">
+                        <span class="framework-name">SMOLAGENTS</span>
+                        <div class="power-level"></div>
+                    </div>
+                    
+                    <!-- The three scripts on the stone -->
+                    <div class="stone-scripts">
+                        <div class="script hieroglyphic">𓊪𓏏𓊮𓀭𓏃𓈖𓊹</div>
+                        <div class="script demotic">Demotic Script</div>
+                        <div class="script greek">ΠΤΟΛΕΜΑΙΟΣ</div>
+                    </div>
+                    
+                    <div class="stone-glow" id="stoneGlow"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Framework Selection Temple Pillars -->
+        <div class="framework-pillars">
+            <div class="pillar" data-framework="smolagents">
+                <div class="pillar-top">⚡</div>
+                <div class="pillar-name">SmolAgents</div>
+                <div class="pillar-desc">Swift & Efficient</div>
+            </div>
+            
+            <div class="pillar active" data-framework="llamaindex">
+                <div class="pillar-top">📚</div>
+                <div class="pillar-name">LlamaIndex</div>
+                <div class="pillar-desc">Deep Knowledge</div>
+            </div>
+            
+            <div class="pillar" data-framework="langgraph">
+                <div class="pillar-top">🧠</div>
+                <div class="pillar-name">LangGraph</div>
+                <div class="pillar-desc">Complex Reasoning</div>
+            </div>
+        </div>
+
+        <!-- Chat Papyrus Scroll -->
+        <div class="papyrus-scroll">
+            <div class="scroll-header">
+                <span class="scroll-title">Ancient Conversations</span>
+                <button class="scroll-clear" id="clearChat">Clear Sacred Text</button>
+            </div>
+            <div class="messages-container" id="messagesContainer">
+                <!-- Messages will appear here -->
+                <div class="welcome-message">
+                    <div class="stone-avatar">🏺</div>
+                    <div class="message-content">
+                        <strong>Greetings, seeker of wisdom!</strong><br>
+                        I am the Rosetta Stone, awakened by your curiosity. 
+                        Click the temple pillars above to awaken different aspects of my consciousness,
+                        then speak to me through the sacred input below...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sacred Input Temple -->
+        <div class="input-temple">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Speak your question to the ancient stone..."
+                    class="sacred-input"
+                >
+                <button id="sendMessage" class="send-button">
+                    <span class="send-hieroglyph">𓊹</span>
+                    Send
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
