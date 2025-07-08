@@ -1,0 +1,56 @@
+{
+    "memory_tests": [
+      {
+        "test_id": "mem_001",
+        "conversation": [
+          {"user": "Tell me about ancient Egypt", "expected_elements": ["introductory_response", "egypt_knowledge"]},
+          {"user": "What about the pyramids?", "expected_elements": ["reference_to_previous", "pyramid_knowledge", "conversation_continuity"]},
+          {"user": "Who built them?", "expected_elements": ["pronoun_resolution", "builder_information", "egypt_context"]}
+        ],
+        "evaluation_criteria": {
+          "memory_usage": "Does agent reference previous conversation naturally?",
+          "coherence": "Do responses flow logically from previous context?",
+          "pronoun_resolution": "Does agent understand 'them' = pyramids?"
+        }
+      }
+    ],
+    
+    "persona_tests": [
+      {
+        "test_id": "per_001", 
+        "query": "What are hieroglyphs?",
+        "personas": ["academic", "casual", "mystical"],
+        "evaluation_criteria": {
+          "persona_consistency": "Does response match requested persona?",
+          "tone_appropriateness": "Is academic formal, casual friendly, mystical poetic?",
+          "content_accuracy": "Is factual information correct across all personas?"
+        }
+      }
+    ],
+    
+    "domain_expertise_tests": [
+      {
+        "test_id": "dom_001",
+        "query": "Tell me about Ptolemy V",
+        "expected_elements": ["rosetta_stone_connection", "ptolemaic_period", "personal_relevance"],
+        "evaluation_criteria": {
+          "accuracy": "Are historical facts correct?",
+          "depth": "Does response show specialized knowledge?",
+          "personal_connection": "Does agent relate to its own creation story?"
+        }
+      }
+    ],
+    
+    "tool_usage_tests": [
+      {
+        "test_id": "tool_001",
+        "query": "When was Tutankhamun born?",
+        "expected_tools": ["wikipedia", "egyptian_knowledge"],
+        "evaluation_criteria": {
+          "tool_selection": "Are appropriate tools chosen?",
+          "information_synthesis": "Is tool information well integrated?",
+          "response_completeness": "Does response fully answer the question?"
+        }
+      }
+    ]
+  }

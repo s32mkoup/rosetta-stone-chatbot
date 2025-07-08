@@ -84,33 +84,38 @@ class ReasoningEngine:
         # Reasoning history for learning
         self.reasoning_history: List[ReasoningResult] = []
     
-    def analyze_user_input(self, user_input: str, context: Dict[str, Any]) -> ReasoningResult:
+    def analyze_user_input(self, user_input: str, context: Dict[str, Any], memory_context: Optional[Dict[str, Any]] = None) -> ReasoningResult:
         """Main reasoning method - analyzes input and determines response strategy"""
-        
-        # Step 1: Initial analysis
+    
+    # Step 1: Initial analysis
         initial_analysis = self._perform_initial_analysis(user_input, context)
-        
-        # Step 2: Determine reasoning type
-        reasoning_type = self._determine_reasoning_type(user_input, initial_analysis)
-        
-        # Step 3: Analyze tool requirements
-        tool_decision, tools_needed = self._analyze_tool_requirements(user_input, reasoning_type, context)
-        
-        # Step 4: Detailed reasoning steps
+    
+    # Memory-enhanced reasoning
+        if memory_context:
+            initial_analysis = self._enhance_analysis_with_memory(initial_analysis, memory_context, user_input)
+    
+    # Step 2: Determine reasoning type and tools
+        reasoning_type = self._determine_reasoning_type(user_input, context)
+
+        tool_decision, tools_needed = self._analyze_tool_requirements(user_input, reasoning_type, context, initial_analysis)
+
+
+    
+    # Step 3: Detailed reasoning steps
         reasoning_steps = self._generate_reasoning_steps(user_input, reasoning_type, tools_needed, context)
-        
-        # Step 5: Emotional and persona context
+    
+    # Step 4: Emotional and persona context
         emotional_context, persona_adjustments = self._analyze_emotional_context(user_input, context)
-        
-        # Step 6: Final strategy formulation
+    
+    # Step 5: Final strategy formulation
         final_strategy = self._formulate_final_strategy(reasoning_steps, reasoning_type, emotional_context)
-        
-        # Step 7: Calculate confidence
+    
+    # Step 6: Calculate confidence
         confidence_score = self._calculate_confidence(reasoning_steps, context)
-        
-        # Step 8: Estimate complexity
+    
+    # Step 7: Estimate complexity
         complexity = self._estimate_complexity(reasoning_steps, tools_needed)
-        
+    
         result = ReasoningResult(
             reasoning_type=reasoning_type,
             tool_decision=tool_decision,
@@ -121,11 +126,11 @@ class ReasoningEngine:
             estimated_complexity=complexity,
             emotional_context=emotional_context,
             persona_adjustments=persona_adjustments
-        )
-        
-        # Store for learning
+    )
+    
+    # Store for learning
         self.reasoning_history.append(result)
-        
+    
         return result
     
     def _perform_initial_analysis(self, user_input: str, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -169,7 +174,6 @@ Analyze and respond with JSON:
                 return self._fallback_analysis(user_input)
                 
         except Exception as e:
-            print(f"Analysis error: {e}")
             return self._fallback_analysis(user_input)
     
     def _determine_reasoning_type(self, user_input: str, analysis: Dict[str, Any]) -> ReasoningType:
@@ -180,13 +184,9 @@ Analyze and respond with JSON:
         
         # Simple direct questions (year, date, name questions) - CHECK THIS FIRST
         simple_patterns = ['what year', 'when did', 'who was', 'where is', 'how many', 'which year']
-        print(f"DEBUG: Checking user input: '{user_input.lower()}'")
-        print(f"DEBUG: Simple patterns: {simple_patterns}")
         for pattern in simple_patterns:
             if pattern in user_input.lower():
-                print(f"DEBUG: Found pattern '{pattern}' - returning DIRECT_ANSWER")
                 return ReasoningType.DIRECT_ANSWER
-        print("DEBUG: No simple patterns found, continuing with other logic...")
         
         # Personal questions about the Stone
         if analysis.get('requires_personal_response') and not analysis.get('requires_factual_info'):
@@ -207,17 +207,17 @@ Analyze and respond with JSON:
         return ReasoningType.DIRECT_ANSWER
     
     def _analyze_tool_requirements(self, user_input: str, reasoning_type: ReasoningType, 
-                                 context: Dict[str, Any]) -> Tuple[ToolDecision, List[str]]:
+                             context: Dict[str, Any], analysis: Dict[str, Any] = None) -> Tuple[ToolDecision, List[str]]:
         """Analyze what tools are needed"""
-        
+
         if reasoning_type in [ReasoningType.DIRECT_ANSWER, ReasoningType.EMOTIONAL_RESPONSE]:
             return ToolDecision.NO_TOOLS, []
-        
+    
         tools_needed = []
-        
+
         # Analyze content for tool requirements
         content_lower = user_input.lower()
-        
+
         # Wikipedia tool patterns
         wikipedia_patterns = [
             r'\b(who is|who was|tell me about|what is|what was)\b',
@@ -225,22 +225,54 @@ Analyze and respond with JSON:
             r'\b(when did|what happened|how did|where is|where was)\b',
             r'\b\d{1,4}\s*(bce|ce|bc|ad)\b'  # Years
         ]
-        
+    
         if any(re.search(pattern, content_lower) for pattern in wikipedia_patterns):
             tools_needed.append('wikipedia')
-        
+    
         # Historical timeline tool
         if any(word in content_lower for word in ['timeline', 'chronology', 'sequence', 'order']):
             tools_needed.append('historical_timeline')
-        
+    
         # Egyptian-specific tool
         if any(word in content_lower for word in ['hieroglyph', 'pyramid', 'mummy', 'nile', 'cairo']):
             tools_needed.append('egyptian_knowledge')
-        
+    
         # Translation tool
         if any(word in content_lower for word in ['translate', 'meaning', 'hieroglyphic', 'demotic', 'greek']):
             tools_needed.append('translation')
+    
+        # Memory-enhanced tool selection
+        if analysis and analysis.get('user_interests'):
+            user_interests = analysis['user_interests']
         
+        # Prioritize Egyptian tool for users interested in Egypt
+            if 'ancient_egypt' in user_interests and 'egyptian_knowledge' not in tools_needed:
+                if any(word in content_lower for word in ['history', 'culture', 'ancient', 'civilization']):
+                    tools_needed.insert(0, 'egyptian_knowledge')  # Add as first priority
+        
+            # Prioritize translation for users interested in languages
+            if 'languages' in user_interests and 'translation' not in tools_needed:
+                if any(word in content_lower for word in ['script', 'writing', 'text', 'language']):
+                    tools_needed.append('translation')
+
+        # Check for follow-up context
+        # Check for follow-up context
+            if analysis and analysis.get('is_followup') and analysis.get('previous_topic'):
+                previous_topics = analysis['previous_topic']
+    
+                # Convert topics to strings safely
+                topic_strings = [str(topic).lower() if topic else '' for topic in previous_topics]
+    
+                # If continuing discussion about Egypt, prefer Egyptian tool
+                if any('egypt' in topic_str for topic_str in topic_strings):
+                    if 'egyptian_knowledge' not in tools_needed:
+                        tools_needed.insert(0, 'egyptian_knowledge')
+    
+                # If continuing about historical timeline, prefer historical tool  
+                if any('timeline' in topic_str or 'period' in topic_str for topic_str in topic_strings):
+                    if 'historical_timeline' not in tools_needed:
+                        tools_needed.append('historical_timeline')
+    
         # Determine tool decision type
         if not tools_needed:
             return ToolDecision.NO_TOOLS, []
@@ -589,3 +621,50 @@ Analyze and respond with JSON:
         for result in reasoning_history:
             complexity_dist[result.estimated_complexity] += 1
         return complexity_dist
+
+
+    def _enhance_analysis_with_memory(self, analysis: Dict[str, Any], memory_context: Dict[str, Any], user_input: str) -> Dict[str, Any]:
+        """Enhance analysis with memory context"""
+        
+        print(f"🧠 MEMORY ENHANCE DEBUG: Starting enhancement")
+        
+        # Check user's past interaction patterns
+        if memory_context.get('user_profile'):
+            user_profile = memory_context['user_profile']
+            print(f"👤 USER PROFILE: {user_profile.interaction_style}, interests: {user_profile.favorite_topics}")
+            
+            # Adjust complexity based on user's past preferences
+            if user_profile.interaction_style == 'academic':
+                analysis['complexity_level'] = 'complex'
+            elif user_profile.interaction_style == 'casual':
+                analysis['complexity_level'] = 'simple'
+                
+            # Add user's favorite topics to context
+            analysis['user_interests'] = user_profile.favorite_topics[:3]
+        
+        # Check recent conversation for continuity (SIMPLIFIED - SAFE VERSION)
+        try:
+            if memory_context.get('recent_conversation'):
+                recent_turns = memory_context['recent_conversation']
+                if recent_turns and len(recent_turns) > 0:
+                    # Check if this is a follow-up question
+                    if any(word in user_input.lower() for word in ['more', 'tell me more', 'continue', 'also', 'what about']):
+                        analysis['is_followup'] = True
+                        analysis['previous_topic'] = ['general']  # Safe default
+        except Exception as e:
+            pass  # Skip if there's any issue
+        
+        # Use Stone's accumulated memories (SAFE VERSION)
+        try:
+            stone_memories = memory_context.get('stone_memories', [])
+            if stone_memories:
+                # Check if current query relates to Stone's experiences
+                if any(topic in user_input.lower() for topic in ['egypt', 'ptolemy', 'hieroglyph', 'ancient']):
+                    analysis['has_personal_memory'] = True
+                    analysis['emotional_enhancement'] = 'nostalgic'
+        except Exception as e:
+            print(f"🧠 STONE MEMORIES ERROR: {e}")
+            pass  # Skip if there's any issue
+        
+        return analysis
+    

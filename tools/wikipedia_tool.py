@@ -158,6 +158,17 @@ class WikipediaTool(BaseTool):
         
         return enhanced_query
     
+    def batch_pharaoh_search(self, pharaoh_list: List[str]) -> Dict[str, str]:
+        """Scrape multiple pharaoh pages at once"""
+        results = {}
+        for pharaoh in pharaoh_list:
+            try:
+                result = self._direct_page_search(pharaoh)
+                if result:
+                    results[pharaoh] = result.extract
+            except:
+                continue
+        return results
     def _multi_strategy_search(self, query: str, **kwargs) -> List[WikipediaSearchResult]:
         """Perform search using multiple strategies"""
         

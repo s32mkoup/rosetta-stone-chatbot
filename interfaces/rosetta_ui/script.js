@@ -5,7 +5,7 @@ class RosettaStoneUI {
         this.currentFramework = 'smolagents';
         this.isProcessing = false;
         this.messageHistory = [];
-        this.apiBaseUrl = '';
+        this.apiBaseUrl = 'http://localhost:8080';
         
         // Initialize the interface
         this.initializeEventListeners();

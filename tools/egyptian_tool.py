@@ -33,7 +33,11 @@ class EgyptianKnowledgeTool(BaseTool):
     
     def __init__(self, config=None):
         super().__init__(config)
-        
+        self.major_pharaohs = [
+            "Khufu", "Khafre", "Menkaure", "Hatshepsut", "Thutmose III", 
+            "Akhenaten", "Nefertiti", "Ramesses II", "Seti I", "Amenhotep III",
+            "Djoser", "Sneferu", "Amenemhat I", "Senusret III", "Ahmose I"
+        ]
         # Initialize Egyptian knowledge base
         self.knowledge_base = self._initialize_knowledge_base()
         self.dynasty_timeline = self._initialize_dynasty_timeline()

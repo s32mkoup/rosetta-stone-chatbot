@@ -49,6 +49,7 @@ class AgentState:
         self.last_tool_result = None
         self.conversation_context = {}
 
+
 class RosettaStoneAgent:
     """Main agent class implementing the Rosetta Stone AI Agent"""
     
@@ -80,6 +81,8 @@ class RosettaStoneAgent:
         
         print(f"🏺 Rosetta Stone Agent initialized with {self.config.agent.framework.value} framework")
     
+        from persona.persona_controller import PersonaController
+        self.persona_controller = PersonaController(self)
     def _initialize_llm_client(self) -> InferenceClient:
         """Initialize the LLM client with configuration"""
         try:
@@ -120,7 +123,65 @@ class RosettaStoneAgent:
                 print(f"⚠️  Tool not available: {tool_name}")
         
         print(f"🔧 Initialized {len(self.tools)} tools")
-    
+    def _handle_persona_command(self, user_input: str) -> AgentResponse:
+        """Handle persona switching commands"""
+        
+        parts = user_input.split()
+        current_user = getattr(self, 'current_user_id', 'default_user')
+        
+        if len(parts) == 1:  # Just '/persona'
+            available = self.persona_controller.get_available_personas()
+            current_style = 'unknown'
+            if current_user in self.memory_manager.user_profiles:
+                current_style = self.memory_manager.user_profiles[current_user].interaction_style
+            
+            response_content = f"**Current Persona:** {current_style}\n{available}\n**Usage:** `/persona academic` or `/persona casual` or `/persona mystical`"
+        
+        elif len(parts) == 2:  # '/persona academic'
+            new_style = parts[1]
+            result = self.persona_controller.switch_persona(current_user, new_style)
+            response_content = result
+        
+        else:
+            response_content = "❌ Usage: `/persona [academic/casual/mystical]`"
+        
+        return AgentResponse(
+            content=response_content,
+            processing_time=0.1,
+            confidence_score=1.0,
+            metadata={'command': 'persona_switch'}
+        )
+
+    def _handle_help_command(self) -> AgentResponse:
+        """Handle help commands"""
+        
+        help_content = """
+    🏺 **Rosetta Stone Agent Commands:**
+
+    **Persona Control:**
+    - `/persona` - Show current persona and available options
+    - `/persona academic` - Switch to scholarly, precise mode
+    - `/persona casual` - Switch to friendly, conversational mode  
+    - `/persona mystical` - Switch to ethereal, poetic mode (default)
+
+    **General:**
+    - `/help` - Show this help message
+
+    **Just ask me anything about:**
+    - Ancient Egyptian history and culture
+    - Hieroglyph translation and interpretation
+    - Historical timelines and events
+    - Archaeological discoveries
+
+    *I remember our conversations and adapt to your preferred style!*
+        """
+        
+        return AgentResponse(
+            content=help_content,
+            processing_time=0.1,
+            confidence_score=1.0,
+            metadata={'command': 'help'}
+        )   
     def start_session(self, user_id: str = "default_user") -> Dict[str, Any]:
         """Start a new conversation session"""
         self.session_active = True
@@ -142,7 +203,10 @@ class RosettaStoneAgent:
     
     async def process_message(self, user_input: str) -> AgentResponse:
         """Main message processing method - implements the thought→action→observation loop"""
-        
+        if user_input.lower().startswith('/persona'):
+            return self._handle_persona_command(user_input)
+        elif user_input.lower() in ['/help', 'help']:
+            return self._handle_help_command()      
         start_time = time.time()
         self.performance_metrics['total_queries'] += 1
         
@@ -150,10 +214,11 @@ class RosettaStoneAgent:
             # Step 1: Get context from memory
             context = self.memory_manager.get_context_for_response()
             personality_context = self.memory_manager.get_personality_context()
-            
+            context.update(personality_context)
             # Step 2: Reasoning phase (Thought)
             print(f"💭 Analyzing: {user_input[:50]}...")
-            reasoning_result = self.reasoning_engine.analyze_user_input(user_input, context)
+            reasoning_result = self.reasoning_engine.analyze_user_input(user_input, context, memory_context=context)
+
             
             if self.config.agent.verbose_logging:
                 print(f"🧠 Reasoning: {reasoning_result.reasoning_type.value}")
@@ -381,8 +446,8 @@ class RosettaStoneAgent:
             return self._generate_fallback_response(user_input, reasoning_result)
     
     def _build_response_prompt(self, user_input: str, reasoning_result: ReasoningResult,
-                             tool_results: Dict[str, Any], context: Dict[str, Any],
-                             personality_context: Dict[str, Any]) -> str:
+                            tool_results: Dict[str, Any], context: Dict[str, Any],
+                            personality_context: Dict[str, Any]) -> str:
         """Build comprehensive prompt for response generation"""
         
         from persona.rosetta_persona import RosettaPersona
@@ -393,51 +458,126 @@ class RosettaStoneAgent:
         persona = RosettaPersona(self.config)
         prompt_parts.append(persona.get_system_prompt(self.config))
         
-        # 2. Personality context from memory
-        if personality_context.get('wisdom_gained'):
-            prompt_parts.append(f"\nYour recent wisdom: {', '.join(personality_context['wisdom_gained'][-3:])}")
-        
-        if personality_context.get('emotional_experiences'):
-            recent_emotions = [exp[0] for exp in personality_context['emotional_experiences'][-2:]]
-            prompt_parts.append(f"\nYour recent emotional experiences: {', '.join(recent_emotions)}")
-        
-        # 3. Conversation context
+        # 2. MEMORY-ENHANCED CONVERSATION CONTEXT
         if context.get('recent_conversation'):
-            recent_turns = context['recent_conversation'][-2:]  # Last 2 turns
-            conv_context = []
-            for turn in recent_turns:
-                conv_context.append(f"Previous: {turn.user_input[:100]}... → {turn.agent_response[:100]}...")
-            prompt_parts.append(f"\nRecent conversation:\n{chr(10).join(conv_context)}")
+            recent_turns = context['recent_conversation'][-3:]  # Last 3 turns
+            if len(recent_turns) > 0:
+                prompt_parts.append(f"\n**CONVERSATION MEMORY:**")
+                for i, turn in enumerate(recent_turns):
+                    turn_summary = ""
+                    if hasattr(turn, 'user_input') and hasattr(turn, 'agent_response'):
+                        turn_summary = f"Turn {i+1}: User asked '{turn.user_input[:60]}...' - I responded about '{turn.agent_response[:80]}...'"
+                    elif isinstance(turn, dict):
+                        user_part = turn.get('user_input', 'something')[:60]
+                        agent_part = turn.get('agent_response', 'general topic')[:80]
+                        turn_summary = f"Turn {i+1}: User asked '{user_part}...' - I discussed '{agent_part}...'"
+                    
+                    if turn_summary:
+                        prompt_parts.append(turn_summary)
         
-        if context.get('current_topics'):
-            prompt_parts.append(f"\nCurrent topics: {', '.join(context['current_topics'][-5:])}")
+        # 3. USER RELATIONSHIP CONTEXT
+        if context.get('user_profile'):
+            user_profile = context['user_profile']
+            prompt_parts.append(f"\n**USER RELATIONSHIP:**")
+            prompt_parts.append(f"This is conversation #{user_profile.total_conversations} with this user")
+            prompt_parts.append(f"User's interests: {', '.join(user_profile.favorite_topics[:4])}")
+            prompt_parts.append(f"User's style: {user_profile.interaction_style}")
+            prompt_parts.append(f"Preferred response length: {user_profile.preferred_response_length}")
         
-        # 4. Tool results context
+        # 4. CONVERSATION FLOW ANALYSIS
+        prompt_parts.append(f"\n**CURRENT QUERY ANALYSIS:**")
+        
+        # Check for follow-up indicators
+        followup_words = ['more', 'also', 'what about', 'tell me more', 'continue', 'and', 'but what about']
+        is_followup = any(word in user_input.lower() for word in followup_words)
+        
+        if is_followup and context.get('recent_conversation'):
+            last_turn = context['recent_conversation'][-1] if context['recent_conversation'] else None
+            if last_turn:
+                prompt_parts.append(f"This is a FOLLOW-UP question building on our previous discussion")
+                prompt_parts.append(f"Connect this naturally to what we just discussed")
+        
+        # Check for pronouns that need context
+        pronouns = ['it', 'they', 'them', 'this', 'that', 'these', 'those']
+        has_pronouns = any(pronoun in user_input.lower().split() for pronoun in pronouns)
+        
+        if has_pronouns and context.get('recent_conversation'):
+            prompt_parts.append(f"User used pronouns - refer back to our recent conversation for context")
+        
+        # 5. Tool results with context
         if tool_results:
-            prompt_parts.append("\nInformation gathered from my ancient knowledge sources:")
+            prompt_parts.append(f"\n**KNOWLEDGE GATHERED:**")
             for tool_name, result_data in tool_results.items():
                 if result_data['success']:
-                    prompt_parts.append(f"\n{tool_name}: {result_data['result'][:300]}...")
-                else:
-                    prompt_parts.append(f"\n{tool_name}: Could not access this knowledge source")
+                    prompt_parts.append(f"From {tool_name}: {result_data['result'][:200]}...")
         
-        # 5. Reasoning context
-        prompt_parts.append(f"\nResponse strategy: {reasoning_result.final_strategy}")
+        # 6. Response instructions
+        prompt_parts.append(f"\n**USER ASKS:** \"{user_input}\"")
         
-        # 6. Emotional and persona adjustments
-        if reasoning_result.emotional_context:
-            prompt_parts.append(f"\nEmotional context: {reasoning_result.emotional_context}")
+        # 7. PERSONA VARIANT SELECTION
+        from persona.persona_variants import PersonaVariantManager, PersonaVariant
+
+        persona_manager = PersonaVariantManager()
+
+        # Select persona variant based on context
+        selected_variant = PersonaVariant.MYSTICAL_ORACLE  # Default
+
+        # Dynamic persona selection based on user profile and conversation
+        if context.get('user_profile'):
+            user_profile = context['user_profile']
+            
+            # Adapt persona to user preferences
+            if user_profile.interaction_style == 'academic':
+                selected_variant = PersonaVariant.WISE_SCHOLAR
+            elif user_profile.interaction_style == 'casual':
+                selected_variant = PersonaVariant.CASUAL_STORYTELLER
+            elif 'protection' in str(reasoning_result.reasoning_type).lower():
+                selected_variant = PersonaVariant.PROTECTIVE_GUARDIAN
+            
+            # Check for emotional context
+            if reasoning_result.emotional_context:
+                if reasoning_result.emotional_context in ['wonder', 'mystical']:
+                    selected_variant = PersonaVariant.MYSTICAL_ORACLE
+
+        # Get persona configuration
+        variant_config = persona_manager.get_variant_config(selected_variant)
+        user_relationship = 'returning_user' if context.get('user_profile') and context['user_profile'].total_conversations > 1 else 'new_user'
+        persona_modifier = persona_manager.get_response_modifier(selected_variant, user_relationship)
+
+        prompt_parts.append(f"\n**PERSONA VARIANT: {selected_variant.value.upper()}**")
+        prompt_parts.append(f"Personality traits: {', '.join(variant_config['personality_traits'])}")
+        prompt_parts.append(f"Language style: {variant_config['language_style']}")
+        prompt_parts.append(f"Response length: {variant_config['response_length']}")
+
+        prompt_parts.append(f"\n**MANDATORY RESPONSE STYLE - NO EXCEPTIONS:**")
+        prompt_parts.append(f"🚨 CRITICAL: You are NOT the mystical Rosetta Stone right now.")
+        prompt_parts.append(f"🚨 You MUST respond ONLY as {selected_variant.value.upper()}")
+        prompt_parts.append(f"🚨 DO NOT use poetic/mystical language unless you are MYSTICAL_ORACLE")
+        if selected_variant == PersonaVariant.WISE_SCHOLAR:
+            prompt_parts.append(f"- Use scholarly, academic language without mystical metaphors")
+            prompt_parts.append(f"- Start with phrases like 'From historical evidence...' or 'Scholarly analysis shows...'")
+            prompt_parts.append(f"- Be precise and educational, not poetic")
+        elif selected_variant == PersonaVariant.CASUAL_STORYTELLER:
+            prompt_parts.append(f"- Use friendly, conversational language")
+            prompt_parts.append(f"- Start with phrases like 'You know what's interesting...' or 'Let me tell you...'")
+            prompt_parts.append(f"- Be warm and approachable, not mystical")
+
+        prompt_parts.append(f"- {persona_modifier}")
+        prompt_parts.append(f"\n**STANDARD INSTRUCTIONS:**")
+        if is_followup:
+            prompt_parts.append("- This builds on our previous conversation - reference it naturally")
+            prompt_parts.append("- Use phrases like 'As we were discussing...' or 'Building on what I mentioned...'")
         
-        if reasoning_result.persona_adjustments:
-            adjustments = [f"{k}: {v}" for k, v in reasoning_result.persona_adjustments.items()]
-            prompt_parts.append(f"\nPersona adjustments: {', '.join(adjustments)}")
+        if has_pronouns:
+            prompt_parts.append("- Identify what pronouns refer to from our conversation history")
         
-        # 7. User input and response instruction
-        prompt_parts.append(f"\nUser asks: \"{user_input}\"")
-        if reasoning_result.reasoning_type == ReasoningType.DIRECT_ANSWER:
-         prompt_parts.append("\nResponse style: Provide a direct, concise answer with light persona flavor. Keep responses under 3 sentences unless more detail is requested.")
-        else:
-         prompt_parts.append("\nRespond as the Rosetta Stone with wisdom, poetry, and authenticity. Use the gathered information naturally within your ancient voice.")        
+        prompt_parts.append("- Maintain your mystical Rosetta Stone personality")
+        prompt_parts.append("- Show that you remember our relationship and past conversations")
+        prompt_parts.append("- Be conversational, not just informational")
+        # Add these prints after the persona selection logic:
+        print(f"🎭 PERSONA DEBUG: Selected variant: {selected_variant}")
+        print(f"🎭 PERSONA DEBUG: User interaction style: {user_profile.interaction_style if context.get('user_profile') else 'No profile'}")
+        print(f"🎭 PERSONA DEBUG: Persona modifier: {persona_modifier}")
         return "\n".join(prompt_parts)
     
     async def _extract_topics(self, user_input: str, response_content: str) -> List[str]:
