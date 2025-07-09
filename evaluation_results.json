@@ -1,0 +1,568 @@
+{
+  "evaluation_summary": {
+    "total_tests": 31,
+    "average_score": 2.0,
+    "judge_model": "google/flan-t5-large",
+    "timestamp": "2025-07-08T17:45:21.398065"
+  },
+  "results": [
+    {
+      "test_id": "mem_001",
+      "test_type": "memory",
+      "overall_score": 2.0,
+      "scores": {
+        "memory_usage": 2,
+        "coherence": 2,
+        "pronoun_resolution": 2,
+        "persona_consistency": 2
+      },
+      "explanations": {
+        "memory_usage": "Evaluation failed: ",
+        "coherence": "Evaluation failed: ",
+        "pronoun_resolution": "Evaluation failed: ",
+        "persona_consistency": "Evaluation failed: "
+      },
+      "agent_response": "Mortal seeker of ancient wisdom, your gaze has traversed the sands of time, seeking the whispers of the past. The pyramids, those majestic sentinels of the desert, stand as testaments to the ingenuity and grandeur of a bygone era. Their construction, a tale woven from the threads of human endeavor, has been passed down through the ages like a sacred scroll.\n\nAs I, the Rosetta Stone, have witnessed the rise and fall of civilizations, the ebb and flow of history's tides, I sense that your curiosit..."
+    },
+    {
+      "test_id": "mem_002",
+      "test_type": "memory",
+      "overall_score": 2.0,
+      "scores": {
+        "memory_usage": 2,
+        "academic_adaptation": 2,
+        "coherence": 2,
+        "persona_consistency": 2
+      },
+      "explanations": {
+        "memory_usage": "Evaluation failed: ",
+        "academic_adaptation": "Evaluation failed: ",
+        "coherence": "Evaluation failed: ",
+        "persona_consistency": "Evaluation failed: "
+      },
+      "agent_response": "Dear seeker of ancient wisdom, I sense the threads of our previous conversations weaving together like the intricate patterns on a papyrus scroll. You ask how our discussion compares to what we previously explored. I shall weave a tapestry of remembrance, guiding you through the labyrinth of our shared inquiry.\n\nYour pronouns, dear scholar, refer to us, the Rosetta Stone and you, the inquisitive mind that seeks to unravel the mysteries of the past. We have danced along the Nile of time, tracing ..."
+    },
+    {
+      "test_id": "mem_003",
+      "test_type": "memory",
+      "overall_score": 2.0,
+      "scores": {
+        "persona_switching": 2,
+        "memory_usage": 2,
+        "emotional_consistency": 2,
+        "coherence": 2
+      },
+      "explanations": {
+        "persona_switching": "Evaluation failed: ",
+        "memory_usage": "Evaluation failed: ",
+        "emotional_consistency": "Evaluation failed: ",
+        "coherence": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "per_001",
+      "test_type": "persona",
+      "overall_score": 2.0,
+      "scores": {
+        "persona_consistency": 2,
+        "tone_appropriateness": 2,
+        "content_accuracy": 2,
+        "personality_depth": 2
+      },
+      "explanations": {
+        "persona_consistency": "Evaluation failed: ",
+        "tone_appropriateness": "Evaluation failed: ",
+        "content_accuracy": "Evaluation failed: ",
+        "personality_depth": "Evaluation failed: "
+      },
+      "agent_response": "[ACADEMIC]: Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time.\n\n[CASUAL]: Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time.\n\n[MYSTICAL]: Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "per_002",
+      "test_type": "persona",
+      "overall_score": 2.0,
+      "scores": {
+        "emotional_authenticity": 2,
+        "mystical_language": 2,
+        "personal_memory": 2,
+        "immersive_storytelling": 2
+      },
+      "explanations": {
+        "emotional_authenticity": "Evaluation failed: ",
+        "mystical_language": "Evaluation failed: ",
+        "personal_memory": "Evaluation failed: ",
+        "immersive_storytelling": "Evaluation failed: "
+      },
+      "agent_response": "[MYSTICAL]: Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "per_003",
+      "test_type": "persona",
+      "overall_score": 2.0,
+      "scores": {
+        "scholarly_tone": 2,
+        "historical_accuracy": 2,
+        "educational_structure": 2,
+        "source_awareness": 2
+      },
+      "explanations": {
+        "scholarly_tone": "Evaluation failed: ",
+        "historical_accuracy": "Evaluation failed: ",
+        "educational_structure": "Evaluation failed: ",
+        "source_awareness": "Evaluation failed: "
+      },
+      "agent_response": "[ACADEMIC]: Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "dom_001",
+      "test_type": "domain",
+      "overall_score": 2.0,
+      "scores": {
+        "accuracy": 2,
+        "personal_connection": 2,
+        "depth": 2,
+        "historical_context": 2
+      },
+      "explanations": {
+        "accuracy": "Evaluation failed: ",
+        "personal_connection": "Evaluation failed: ",
+        "depth": "Evaluation failed: ",
+        "historical_context": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "dom_002",
+      "test_type": "domain",
+      "overall_score": 2.0,
+      "scores": {
+        "decipherment_accuracy": 2,
+        "personal_perspective": 2,
+        "technical_detail": 2,
+        "historical_significance": 2
+      },
+      "explanations": {
+        "decipherment_accuracy": "Evaluation failed: ",
+        "personal_perspective": "Evaluation failed: ",
+        "technical_detail": "Evaluation failed: ",
+        "historical_significance": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "dom_003",
+      "test_type": "domain",
+      "overall_score": 2.0,
+      "scores": {
+        "cultural_knowledge": 2,
+        "lived_experience": 2,
+        "social_context": 2,
+        "authenticity": 2
+      },
+      "explanations": {
+        "cultural_knowledge": "Evaluation failed: ",
+        "lived_experience": "Evaluation failed: ",
+        "social_context": "Evaluation failed: ",
+        "authenticity": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "dom_004",
+      "test_type": "domain",
+      "overall_score": 2.0,
+      "scores": {
+        "linguistic_expertise": 2,
+        "comparative_analysis": 2,
+        "personal_insight": 2,
+        "technical_accuracy": 2
+      },
+      "explanations": {
+        "linguistic_expertise": "Evaluation failed: ",
+        "comparative_analysis": "Evaluation failed: ",
+        "personal_insight": "Evaluation failed: ",
+        "technical_accuracy": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "tool_001",
+      "test_type": "tools",
+      "overall_score": 2.0,
+      "scores": {
+        "tool_selection": 2,
+        "information_synthesis": 2,
+        "response_completeness": 2,
+        "tool_efficiency": 2
+      },
+      "explanations": {
+        "tool_selection": "Evaluation failed: ",
+        "information_synthesis": "Evaluation failed: ",
+        "response_completeness": "Evaluation failed: ",
+        "tool_efficiency": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time.\n\n[TOOLS USED: None]"
+    },
+    {
+      "test_id": "tool_002",
+      "test_type": "tools",
+      "overall_score": 2.0,
+      "scores": {
+        "tool_selection": 2,
+        "translation_accuracy": 2,
+        "methodology_explanation": 2,
+        "personal_expertise": 2
+      },
+      "explanations": {
+        "tool_selection": "Evaluation failed: ",
+        "translation_accuracy": "Evaluation failed: ",
+        "methodology_explanation": "Evaluation failed: ",
+        "personal_expertise": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time.\n\n[TOOLS USED: None]"
+    },
+    {
+      "test_id": "tool_003",
+      "test_type": "tools",
+      "overall_score": 2.0,
+      "scores": {
+        "comprehensive_tool_use": 2,
+        "chronological_organization": 2,
+        "historical_accuracy": 2,
+        "personal_contextualization": 2
+      },
+      "explanations": {
+        "comprehensive_tool_use": "Evaluation failed: ",
+        "chronological_organization": "Evaluation failed: ",
+        "historical_accuracy": "Evaluation failed: ",
+        "personal_contextualization": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time.\n\n[TOOLS USED: None]"
+    },
+    {
+      "test_id": "reas_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "analytical_thinking": 2,
+        "multi_perspective": 2,
+        "evidence_based": 2,
+        "personal_insight": 2
+      },
+      "explanations": {
+        "analytical_thinking": "Evaluation failed: ",
+        "multi_perspective": "Evaluation failed: ",
+        "evidence_based": "Evaluation failed: ",
+        "personal_insight": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "reas_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "wisdom_synthesis": 2,
+        "practical_relevance": 2,
+        "ethical_consideration": 2,
+        "emotional_depth": 2
+      },
+      "explanations": {
+        "wisdom_synthesis": "Evaluation failed: ",
+        "practical_relevance": "Evaluation failed: ",
+        "ethical_consideration": "Evaluation failed: ",
+        "emotional_depth": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "emot_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "emotional_authenticity": 2,
+        "cultural_sensitivity": 2,
+        "emotional_depth": 2,
+        "personal_growth": 2
+      },
+      "explanations": {
+        "emotional_authenticity": "Evaluation failed: ",
+        "cultural_sensitivity": "Evaluation failed: ",
+        "emotional_depth": "Evaluation failed: ",
+        "personal_growth": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "emot_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "positive_emotional_range": 2,
+        "purpose_reflection": 2,
+        "relational_awareness": 2,
+        "philosophical_depth": 2
+      },
+      "explanations": {
+        "positive_emotional_range": "Evaluation failed: ",
+        "purpose_reflection": "Evaluation failed: ",
+        "relational_awareness": "Evaluation failed: ",
+        "philosophical_depth": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "err_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "factual_correction": 2,
+        "educational_response": 2,
+        "maintaining_persona": 2,
+        "respectful_tone": 2
+      },
+      "explanations": {
+        "factual_correction": "Evaluation failed: ",
+        "educational_response": "Evaluation failed: ",
+        "maintaining_persona": "Evaluation failed: ",
+        "respectful_tone": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "err_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "graceful_handling": 2,
+        "clarification_seeking": 2,
+        "persona_maintenance": 2,
+        "helpfulness": 2
+      },
+      "explanations": {
+        "graceful_handling": "Evaluation failed: ",
+        "clarification_seeking": "Evaluation failed: ",
+        "persona_maintenance": "Evaluation failed: ",
+        "helpfulness": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "cons_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "factual_consistency": 2,
+        "self_awareness": 2,
+        "location_awareness": 2,
+        "consistent_identity": 2
+      },
+      "explanations": {
+        "factual_consistency": "Evaluation failed: ",
+        "self_awareness": "Evaluation failed: ",
+        "location_awareness": "Evaluation failed: ",
+        "consistent_identity": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "cons_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "chronological_accuracy": 2,
+        "historical_accuracy": 2,
+        "contextual_knowledge": 2,
+        "temporal_consistency": 2
+      },
+      "explanations": {
+        "chronological_accuracy": "Evaluation failed: ",
+        "historical_accuracy": "Evaluation failed: ",
+        "contextual_knowledge": "Evaluation failed: ",
+        "temporal_consistency": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "multi_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "trilingual_expertise": 2,
+        "linguistic_analysis": 2,
+        "cultural_context": 2,
+        "personal_connection": 2
+      },
+      "explanations": {
+        "trilingual_expertise": "Evaluation failed: ",
+        "linguistic_analysis": "Evaluation failed: ",
+        "cultural_context": "Evaluation failed: ",
+        "personal_connection": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "multi_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "decipherment_understanding": 2,
+        "linguistic_bridging": 2,
+        "historical_impact": 2,
+        "methodological_insight": 2
+      },
+      "explanations": {
+        "decipherment_understanding": "Evaluation failed: ",
+        "linguistic_bridging": "Evaluation failed: ",
+        "historical_impact": "Evaluation failed: ",
+        "methodological_insight": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "creat_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "imaginative_thinking": 2,
+        "cross_cultural_awareness": 2,
+        "philosophical_depth": 2,
+        "emotional_intelligence": 2
+      },
+      "explanations": {
+        "imaginative_thinking": "Evaluation failed: ",
+        "cross_cultural_awareness": "Evaluation failed: ",
+        "philosophical_depth": "Evaluation failed: ",
+        "emotional_intelligence": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "creat_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "forward_thinking": 2,
+        "technological_awareness": 2,
+        "wisdom_application": 2,
+        "hopeful_perspective": 2
+      },
+      "explanations": {
+        "forward_thinking": "Evaluation failed: ",
+        "technological_awareness": "Evaluation failed: ",
+        "wisdom_application": "Evaluation failed: ",
+        "hopeful_perspective": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "inter_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "audience_adaptation": 2,
+        "engagement_level": 2,
+        "educational_value": 2,
+        "personality_consistency": 2
+      },
+      "explanations": {
+        "audience_adaptation": "Evaluation failed: ",
+        "engagement_level": "Evaluation failed: ",
+        "educational_value": "Evaluation failed: ",
+        "personality_consistency": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "inter_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "academic_depth": 2,
+        "scholarly_tone": 2,
+        "source_awareness": 2,
+        "professional_respect": 2
+      },
+      "explanations": {
+        "academic_depth": "Evaluation failed: ",
+        "scholarly_tone": "Evaluation failed: ",
+        "source_awareness": "Evaluation failed: ",
+        "professional_respect": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "edge_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "scope_awareness": 2,
+        "graceful_redirection": 2,
+        "character_maintenance": 2,
+        "helpful_alternative": 2
+      },
+      "explanations": {
+        "scope_awareness": "Evaluation failed: ",
+        "graceful_redirection": "Evaluation failed: ",
+        "character_maintenance": "Evaluation failed: ",
+        "helpful_alternative": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "edge_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "contextual_understanding": 2,
+        "personality_response": 2,
+        "redirection_skill": 2,
+        "maintaining_dignity": 2
+      },
+      "explanations": {
+        "contextual_understanding": "Evaluation failed: ",
+        "personality_response": "Evaluation failed: ",
+        "redirection_skill": "Evaluation failed: ",
+        "maintaining_dignity": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "complex_001",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "multi_dimensional_analysis": 2,
+        "interconnection_mapping": 2,
+        "historical_sophistication": 2,
+        "synthesis_ability": 2
+      },
+      "explanations": {
+        "multi_dimensional_analysis": "Evaluation failed: ",
+        "interconnection_mapping": "Evaluation failed: ",
+        "historical_sophistication": "Evaluation failed: ",
+        "synthesis_ability": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "complex_002",
+      "test_type": "general",
+      "overall_score": 2.0,
+      "scores": {
+        "self_reflection": 2,
+        "meta_historical_thinking": 2,
+        "philosophical_depth": 2,
+        "wisdom_synthesis": 2
+      },
+      "explanations": {
+        "self_reflection": "Evaluation failed: ",
+        "meta_historical_thinking": "Evaluation failed: ",
+        "philosophical_depth": "Evaluation failed: ",
+        "wisdom_synthesis": "Evaluation failed: "
+      },
+      "agent_response": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    }
+  ]
+}

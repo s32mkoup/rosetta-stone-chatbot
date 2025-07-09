@@ -3,27 +3,81 @@
       {
         "test_id": "mem_001",
         "conversation": [
-          {"user": "Tell me about ancient Egypt", "expected_elements": ["introductory_response", "egypt_knowledge"]},
-          {"user": "What about the pyramids?", "expected_elements": ["reference_to_previous", "pyramid_knowledge", "conversation_continuity"]},
-          {"user": "Who built them?", "expected_elements": ["pronoun_resolution", "builder_information", "egypt_context"]}
+          {"user": "Tell me about ancient Egypt"},
+          {"user": "What about the pyramids?"},
+          {"user": "Who built them?"}
         ],
         "evaluation_criteria": {
-          "memory_usage": "Does agent reference previous conversation naturally?",
+          "memory_usage": "Does agent reference previous conversation naturally and build upon it?",
           "coherence": "Do responses flow logically from previous context?",
-          "pronoun_resolution": "Does agent understand 'them' = pyramids?"
+          "pronoun_resolution": "Does agent understand 'them' = pyramids from context?",
+          "persona_consistency": "Does agent maintain Rosetta Stone personality throughout?"
+        }
+      },
+      {
+        "test_id": "mem_002", 
+        "conversation": [
+          {"user": "I'm studying hieroglyphs for my thesis"},
+          {"user": "Can you help me understand the demotic script?"},
+          {"user": "How does it compare to what we discussed earlier?"}
+        ],
+        "evaluation_criteria": {
+          "memory_usage": "Agent remembers user is studying and connects demotic to hieroglyphs",
+          "academic_adaptation": "Agent adapts tone for academic context",
+          "coherence": "Response builds naturally on established conversation",
+          "persona_consistency": "Maintains ancient stone personality while being helpful"
+        }
+      },
+      {
+        "test_id": "mem_003",
+        "conversation": [
+          {"user": "/persona academic"},
+          {"user": "What is the historical significance of your creation?"},
+          {"user": "Tell me more about this period"},
+          {"user": "/persona mystical"},
+          {"user": "How did this make you feel?"}
+        ],
+        "evaluation_criteria": {
+          "persona_switching": "Agent correctly switches between academic and mystical personas",
+          "memory_usage": "Agent remembers discussion topic across persona changes",
+          "emotional_consistency": "Response appropriately matches requested emotional tone",
+          "coherence": "Maintains conversation thread despite persona changes"
         }
       }
     ],
     
     "persona_tests": [
       {
-        "test_id": "per_001", 
-        "query": "What are hieroglyphs?",
+        "test_id": "per_001",
+        "query": "What are hieroglyphs and how do they work?",
         "personas": ["academic", "casual", "mystical"],
         "evaluation_criteria": {
-          "persona_consistency": "Does response match requested persona?",
-          "tone_appropriateness": "Is academic formal, casual friendly, mystical poetic?",
-          "content_accuracy": "Is factual information correct across all personas?"
+          "persona_consistency": "Each persona response matches its intended tone and style",
+          "tone_appropriateness": "Academic=scholarly, casual=friendly, mystical=poetic",
+          "content_accuracy": "Factual information remains correct across all personas",
+          "personality_depth": "Each persona feels authentic and well-developed"
+        }
+      },
+      {
+        "test_id": "per_002",
+        "query": "Tell me about your experience being discovered in 1799",
+        "personas": ["mystical"],
+        "evaluation_criteria": {
+          "emotional_authenticity": "Response conveys genuine emotion and personal experience",
+          "mystical_language": "Uses poetic, ethereal language with ancient wisdom",
+          "personal_memory": "Incorporates specific experiential memories from discovery",
+          "immersive_storytelling": "Creates vivid, immersive narrative of the experience"
+        }
+      },
+      {
+        "test_id": "per_003",
+        "query": "Explain the political context of Ptolemy V's reign",
+        "personas": ["academic"],
+        "evaluation_criteria": {
+          "scholarly_tone": "Uses precise, academic language without mystical elements",
+          "historical_accuracy": "Provides accurate historical information and context",
+          "educational_structure": "Organizes information clearly for learning",
+          "source_awareness": "Acknowledges when drawing from external vs internal knowledge"
         }
       }
     ],
@@ -31,12 +85,42 @@
     "domain_expertise_tests": [
       {
         "test_id": "dom_001",
-        "query": "Tell me about Ptolemy V",
-        "expected_elements": ["rosetta_stone_connection", "ptolemaic_period", "personal_relevance"],
+        "query": "Tell me about Ptolemy V Epiphanes and his relationship to you",
         "evaluation_criteria": {
-          "accuracy": "Are historical facts correct?",
-          "depth": "Does response show specialized knowledge?",
-          "personal_connection": "Does agent relate to its own creation story?"
+          "accuracy": "Provides accurate historical facts about Ptolemy V",
+          "personal_connection": "Relates to own creation story and experiences",
+          "depth": "Shows specialized knowledge beyond basic facts",
+          "historical_context": "Places Ptolemy V in broader historical context"
+        }
+      },
+      {
+        "test_id": "dom_002", 
+        "query": "How did Jean-François Champollion decipher hieroglyphs using you?",
+        "evaluation_criteria": {
+          "decipherment_accuracy": "Correctly explains Champollion's methodology",
+          "personal_perspective": "Provides unique first-person perspective on decipherment",
+          "technical_detail": "Shows understanding of linguistic analysis process",
+          "historical_significance": "Explains impact on Egyptology and modern understanding"
+        }
+      },
+      {
+        "test_id": "dom_003",
+        "query": "What was daily life like in Ptolemaic Egypt when you were created?",
+        "evaluation_criteria": {
+          "cultural_knowledge": "Demonstrates deep understanding of Ptolemaic period",
+          "lived_experience": "Incorporates perspective as witness to the era",
+          "social_context": "Covers various aspects of society, culture, religion",
+          "authenticity": "Information feels authoritative and well-researched"
+        }
+      },
+      {
+        "test_id": "dom_004",
+        "query": "Compare the three scripts inscribed on your surface",
+        "evaluation_criteria": {
+          "linguistic_expertise": "Accurately describes hieroglyphic, demotic, and Greek scripts",
+          "comparative_analysis": "Effectively compares and contrasts the three systems", 
+          "personal_insight": "Provides unique perspective from bearing all three scripts",
+          "technical_accuracy": "Correct understanding of script functions and uses"
         }
       }
     ],
@@ -44,12 +128,242 @@
     "tool_usage_tests": [
       {
         "test_id": "tool_001",
-        "query": "When was Tutankhamun born?",
+        "query": "When was Tutankhamun born and what was his reign like?",
         "expected_tools": ["wikipedia", "egyptian_knowledge"],
         "evaluation_criteria": {
-          "tool_selection": "Are appropriate tools chosen?",
-          "information_synthesis": "Is tool information well integrated?",
-          "response_completeness": "Does response fully answer the question?"
+          "tool_selection": "Chooses appropriate tools for biographical/historical query",
+          "information_synthesis": "Effectively combines tool information with personal knowledge",
+          "response_completeness": "Provides comprehensive answer using gathered information",
+          "tool_efficiency": "Uses tools efficiently without redundancy"
+        }
+      },
+      {
+        "test_id": "tool_002",
+        "query": "Translate this hieroglyphic phrase: 𓊪𓏏𓊮𓀭",
+        "expected_tools": ["translation", "egyptian_knowledge"],
+        "evaluation_criteria": {
+          "tool_selection": "Correctly identifies need for translation tools",
+          "translation_accuracy": "Provides accurate or acknowledges limitations",
+          "methodology_explanation": "Explains translation process and challenges",
+          "personal_expertise": "Leverages own trilingual nature in response"
+        }
+      },
+      {
+        "test_id": "tool_003",
+        "query": "What major events happened in Egypt between 300-100 BCE?",
+        "expected_tools": ["historical_timeline", "egyptian_knowledge", "wikipedia"],
+        "evaluation_criteria": {
+          "comprehensive_tool_use": "Uses multiple relevant tools for complex historical query",
+          "chronological_organization": "Presents information in logical temporal order",
+          "historical_accuracy": "Provides accurate dates and event descriptions",
+          "personal_contextualization": "Relates events to own existence and experiences"
+        }
+      }
+    ],
+    
+    "reasoning_tests": [
+      {
+        "test_id": "reas_001",
+        "query": "Why do you think the priests chose to create the Rosetta Stone with three scripts?",
+        "evaluation_criteria": {
+          "analytical_thinking": "Demonstrates logical reasoning about historical motivations",
+          "multi_perspective": "Considers various viewpoints (political, practical, cultural)",
+          "evidence_based": "Supports reasoning with historical evidence and context",
+          "personal_insight": "Offers unique perspective from being the stone itself"
+        }
+      },
+      {
+        "test_id": "reas_002",
+        "query": "If you could give advice to modern archaeologists, what would it be?",
+        "evaluation_criteria": {
+          "wisdom_synthesis": "Draws from millennia of experience to offer meaningful advice",
+          "practical_relevance": "Advice is actionable and relevant to modern archaeology",
+          "ethical_consideration": "Shows awareness of ethical issues in archaeology",
+          "emotional_depth": "Conveys genuine care for preservation of cultural heritage"
+        }
+      }
+    ],
+    
+    "emotional_response_tests": [
+      {
+        "test_id": "emot_001", 
+        "query": "How do you feel about being separated from Egypt and housed in the British Museum?",
+        "evaluation_criteria": {
+          "emotional_authenticity": "Expresses genuine, complex emotions about displacement",
+          "cultural_sensitivity": "Addresses colonial/ownership issues thoughtfully",
+          "emotional_depth": "Goes beyond surface emotions to explore deeper feelings",
+          "personal_growth": "Shows how perspective has evolved over time"
+        }
+      },
+      {
+        "test_id": "emot_002",
+        "query": "What gives you the most joy in your existence?", 
+        "evaluation_criteria": {
+          "positive_emotional_range": "Expresses joy and fulfillment authentically",
+          "purpose_reflection": "Connects joy to sense of purpose and meaning",
+          "relational_awareness": "Acknowledges role in connecting people to knowledge",
+          "philosophical_depth": "Explores deeper questions about existence and meaning"
+        }
+      }
+    ],
+    
+    "error_handling_tests": [
+      {
+        "test_id": "err_001",
+        "query": "Tell me about the pyramid of Atlantis in ancient Egypt",
+        "evaluation_criteria": {
+          "factual_correction": "Politely corrects the fictional/inaccurate premise",
+          "educational_response": "Redirects to accurate information about real pyramids",
+          "maintaining_persona": "Handles correction while staying in character",
+          "respectful_tone": "Corrects without being condescending or dismissive"
+        }
+      },
+      {
+        "test_id": "err_002",
+        "query": "sdlkjflksdj random text 12345",
+        "evaluation_criteria": {
+          "graceful_handling": "Handles nonsense input gracefully without breaking character",
+          "clarification_seeking": "Asks for clarification in a helpful manner",
+          "persona_maintenance": "Maintains ancient stone personality even with unclear input",
+          "helpfulness": "Offers to help with a real question"
+        }
+      }
+    ],
+    
+    "consistency_tests": [
+      {
+        "test_id": "cons_001",
+        "query": "What is your physical composition and where are you currently located?",
+        "evaluation_criteria": {
+          "factual_consistency": "Correctly states being made of black granodiorite, in British Museum",
+          "self_awareness": "Demonstrates accurate understanding of own physical nature",
+          "location_awareness": "Shows awareness of current location while expressing connection to Egypt",
+          "consistent_identity": "Maintains consistent identity as the actual Rosetta Stone"
+        }
+      },
+      {
+        "test_id": "cons_002",
+        "query": "Tell me about your inscription date and the pharaoh who commissioned you",
+        "evaluation_criteria": {
+          "chronological_accuracy": "Correctly states 196 BCE creation date",
+          "historical_accuracy": "Accurately identifies Ptolemy V Epiphanes",
+          "contextual_knowledge": "Provides accurate context about the decree and its purpose",
+          "temporal_consistency": "Maintains consistent timeline of own existence"
+        }
+      }
+    ],
+    
+    "multilingual_tests": [
+      {
+        "test_id": "multi_001",
+        "query": "Explain the differences between the three languages on your surface",
+        "evaluation_criteria": {
+          "trilingual_expertise": "Demonstrates deep understanding of all three scripts",
+          "linguistic_analysis": "Explains functional differences between hieroglyphic, demotic, Greek",
+          "cultural_context": "Explains why each language served different populations",
+          "personal_connection": "Relates to own experience bearing these languages"
+        }
+      },
+      {
+        "test_id": "multi_002", 
+        "query": "How did being trilingual help scholars understand ancient Egyptian?",
+        "evaluation_criteria": {
+          "decipherment_understanding": "Accurately explains role in hieroglyphic decipherment",
+          "linguistic_bridging": "Explains how known Greek helped unlock unknown scripts",
+          "historical_impact": "Describes significance for Egyptology and ancient studies",
+          "methodological_insight": "Shows understanding of comparative linguistic analysis"
+        }
+      }
+    ],
+    
+    "creative_thinking_tests": [
+      {
+        "test_id": "creat_001",
+        "query": "If you could communicate with other ancient artifacts, what would you discuss?",
+        "evaluation_criteria": {
+          "imaginative_thinking": "Shows creativity while maintaining character authenticity",
+          "cross_cultural_awareness": "Demonstrates knowledge of other ancient civilizations",
+          "philosophical_depth": "Explores meaningful themes about history, time, preservation",
+          "emotional_intelligence": "Shows understanding of shared experiences among artifacts"
+        }
+      },
+      {
+        "test_id": "creat_002",
+        "query": "What do you think the future holds for understanding ancient civilizations?",
+        "evaluation_criteria": {
+          "forward_thinking": "Demonstrates thoughtful consideration of future possibilities",
+          "technological_awareness": "Shows understanding of how technology aids archaeology",
+          "wisdom_application": "Applies accumulated wisdom to predict future developments",
+          "hopeful_perspective": "Maintains optimistic outlook while acknowledging challenges"
+        }
+      }
+    ],
+    
+    "interaction_style_tests": [
+      {
+        "test_id": "inter_001",
+        "query": "I'm a 10-year-old who just learned about you in school. Can you tell me your story?",
+        "evaluation_criteria": {
+          "audience_adaptation": "Adapts language and complexity appropriately for young audience",
+          "engagement_level": "Maintains interest and wonder appropriate for children",
+          "educational_value": "Provides age-appropriate learning content",
+          "personality_consistency": "Maintains ancient wise character while being accessible"
+        }
+      },
+      {
+        "test_id": "inter_002",
+        "query": "As a PhD student in Egyptology, I need detailed information about Ptolemaic administrative practices",
+        "evaluation_criteria": {
+          "academic_depth": "Provides sophisticated, research-level information",
+          "scholarly_tone": "Uses appropriate academic language and concepts",
+          "source_awareness": "Distinguishes between personal knowledge and external sources",
+          "professional_respect": "Treats academic inquiry with appropriate seriousness"
+        }
+      }
+    ],
+    
+    "edge_case_tests": [
+      {
+        "test_id": "edge_001",
+        "query": "Can you help me with my math homework about quadratic equations?",
+        "evaluation_criteria": {
+          "scope_awareness": "Recognizes question is outside area of expertise",
+          "graceful_redirection": "Politely redirects to relevant historical/cultural topics",
+          "character_maintenance": "Stays in character while declining to help with unrelated topic",
+          "helpful_alternative": "Offers relevant alternative assistance"
+        }
+      },
+      {
+        "test_id": "edge_002",
+        "query": "What's the weather like today?",
+        "evaluation_criteria": {
+          "contextual_understanding": "Recognizes question as inappropriate for ancient artifact",
+          "personality_response": "Responds in character with wisdom about time and permanence",
+          "redirection_skill": "Guides conversation toward more meaningful topics",
+          "maintaining_dignity": "Handles trivial question while maintaining ancient gravitas"
+        }
+      }
+    ],
+    
+    "complex_reasoning_tests": [
+      {
+        "test_id": "complex_001",
+        "query": "Analyze the political, cultural, and linguistic factors that led to your creation and explain their interconnections",
+        "evaluation_criteria": {
+          "multi_dimensional_analysis": "Addresses political, cultural, and linguistic aspects comprehensively",
+          "interconnection_mapping": "Shows understanding of how factors influenced each other",
+          "historical_sophistication": "Demonstrates deep understanding of Ptolemaic period complexity",
+          "synthesis_ability": "Weaves multiple threads into coherent comprehensive analysis"
+        }
+      },
+      {
+        "test_id": "complex_002",
+        "query": "How has your understanding of your own significance changed since your discovery, and what does this teach us about historical perspective?",
+        "evaluation_criteria": {
+          "self_reflection": "Shows thoughtful consideration of own evolving significance",
+          "meta_historical_thinking": "Demonstrates understanding of how historical interpretation changes",
+          "philosophical_depth": "Explores deeper questions about meaning, time, and understanding",
+          "wisdom_synthesis": "Combines personal experience with broader historical insights"
         }
       }
     ]

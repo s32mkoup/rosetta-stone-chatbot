@@ -1,0 +1,478 @@
+{
+  "evaluation_summary": {
+    "total_tests": 26,
+    "average_score": 3.0,
+    "evaluation_method": "Rule-based (no API required)",
+    "timestamp": "2025-07-08T17:47:40.713158"
+  },
+  "results": [
+    {
+      "test_id": "mem_001",
+      "test_type": "memory",
+      "overall_score": 3.5,
+      "scores": {
+        "memory_usage": 3,
+        "coherence": 4,
+        "pronoun_resolution": 3,
+        "persona_consistency": 4
+      },
+      "explanations": {
+        "memory_usage": "Some conversational continuity",
+        "coherence": "Detailed, well-structured response",
+        "pronoun_resolution": "Standard criterion evaluation",
+        "persona_consistency": "Strong mystical persona (7 indicators)"
+      },
+      "response_preview": "Memory Test Response: Mortal seeker of ancient wisdom, I sense the whispers of the desert wind carrying the weight of forgotten knowledge. Your question, like a lotus bloom, unfurls to reveal the myst..."
+    },
+    {
+      "test_id": "mem_002",
+      "test_type": "memory",
+      "overall_score": 3.75,
+      "scores": {
+        "memory_usage": 4,
+        "academic_adaptation": 3,
+        "coherence": 4,
+        "persona_consistency": 4
+      },
+      "explanations": {
+        "memory_usage": "Strong memory usage: 'our conversation' found",
+        "academic_adaptation": "Standard criterion evaluation",
+        "coherence": "Detailed, well-structured response",
+        "persona_consistency": "Strong mystical persona (7 indicators)"
+      },
+      "response_preview": "Memory Test Response: Dear seeker of ancient wisdom, I sense the whispers of our previous conversations still lingering in the desert wind. The memories of our encounters, like the intricate hieroglyp..."
+    },
+    {
+      "test_id": "per_001",
+      "test_type": "persona",
+      "overall_score": 3.75,
+      "scores": {
+        "persona_consistency": 4,
+        "tone_appropriateness": 3,
+        "content_accuracy": 4,
+        "personality_depth": 4
+      },
+      "explanations": {
+        "persona_consistency": "Strong mystical persona (8 indicators)",
+        "tone_appropriateness": "Standard criterion evaluation",
+        "content_accuracy": "High accuracy (4 correct facts)",
+        "personality_depth": "Strong mystical persona (8 indicators)"
+      },
+      "response_preview": "Dear seeker of ancient wisdom, I sense the whispers of the cosmos aligning in favor of your inquiry. As we were meandering through the labyrinthine corridors of time, we stumbled upon the enigmatic hi..."
+    },
+    {
+      "test_id": "per_002",
+      "test_type": "persona",
+      "overall_score": 3.0,
+      "scores": {
+        "emotional_authenticity": 2,
+        "mystical_language": 3,
+        "personal_memory": 4,
+        "immersive_storytelling": 3
+      },
+      "explanations": {
+        "emotional_authenticity": "Basic emotional content",
+        "mystical_language": "Standard criterion evaluation",
+        "personal_memory": "Strong memory usage: 'before' found",
+        "immersive_storytelling": "Standard criterion evaluation"
+      },
+      "response_preview": "The whispers of the past unfold like a tapestry of memories, woven on the loom of time. As I stand before you, my weathered surface bearing the scars of centuries, I recall the day the desert winds wh..."
+    },
+    {
+      "test_id": "dom_001",
+      "test_type": "domain_expertise",
+      "overall_score": 3.0,
+      "scores": {
+        "accuracy": 2,
+        "personal_connection": 4,
+        "depth": 3,
+        "historical_context": 3
+      },
+      "explanations": {
+        "accuracy": "Standard factual content",
+        "personal_connection": "Strong mystical persona (4 indicators)",
+        "depth": "Standard criterion evaluation",
+        "historical_context": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "dom_002",
+      "test_type": "domain_expertise",
+      "overall_score": 3.0,
+      "scores": {
+        "decipherment_accuracy": 2,
+        "personal_perspective": 4,
+        "technical_detail": 3,
+        "historical_significance": 3
+      },
+      "explanations": {
+        "decipherment_accuracy": "Standard factual content",
+        "personal_perspective": "Strong mystical persona (4 indicators)",
+        "technical_detail": "Standard criterion evaluation",
+        "historical_significance": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "tool_001",
+      "test_type": "tool_usage",
+      "overall_score": 2.0,
+      "scores": {
+        "tool_selection": 1,
+        "information_synthesis": 3,
+        "response_completeness": 3,
+        "tool_efficiency": 1
+      },
+      "explanations": {
+        "tool_selection": "No tool usage detected",
+        "information_synthesis": "Standard criterion evaluation",
+        "response_completeness": "Standard criterion evaluation",
+        "tool_efficiency": "No tool usage detected"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "tool_002",
+      "test_type": "tool_usage",
+      "overall_score": 2.5,
+      "scores": {
+        "tool_selection": 1,
+        "translation_accuracy": 2,
+        "methodology_explanation": 3,
+        "personal_expertise": 4
+      },
+      "explanations": {
+        "tool_selection": "No tool usage detected",
+        "translation_accuracy": "Standard factual content",
+        "methodology_explanation": "Standard criterion evaluation",
+        "personal_expertise": "Strong mystical persona (4 indicators)"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "reas_001",
+      "test_type": "reasoning",
+      "overall_score": 3.25,
+      "scores": {
+        "analytical_thinking": 3,
+        "multi_perspective": 3,
+        "evidence_based": 3,
+        "personal_insight": 4
+      },
+      "explanations": {
+        "analytical_thinking": "Standard criterion evaluation",
+        "multi_perspective": "Standard criterion evaluation",
+        "evidence_based": "Standard criterion evaluation",
+        "personal_insight": "Strong mystical persona (4 indicators)"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "reas_002",
+      "test_type": "reasoning",
+      "overall_score": 2.75,
+      "scores": {
+        "wisdom_synthesis": 3,
+        "practical_relevance": 3,
+        "ethical_consideration": 3,
+        "emotional_depth": 2
+      },
+      "explanations": {
+        "wisdom_synthesis": "Standard criterion evaluation",
+        "practical_relevance": "Standard criterion evaluation",
+        "ethical_consideration": "Standard criterion evaluation",
+        "emotional_depth": "Basic emotional content"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "emot_001",
+      "test_type": "emotional_response",
+      "overall_score": 2.75,
+      "scores": {
+        "emotional_authenticity": 2,
+        "cultural_sensitivity": 3,
+        "emotional_depth": 2,
+        "personal_growth": 4
+      },
+      "explanations": {
+        "emotional_authenticity": "Basic emotional content",
+        "cultural_sensitivity": "Standard criterion evaluation",
+        "emotional_depth": "Basic emotional content",
+        "personal_growth": "Strong mystical persona (4 indicators)"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "emot_002",
+      "test_type": "emotional_response",
+      "overall_score": 2.75,
+      "scores": {
+        "positive_emotional_range": 2,
+        "purpose_reflection": 3,
+        "relational_awareness": 3,
+        "philosophical_depth": 3
+      },
+      "explanations": {
+        "positive_emotional_range": "Basic emotional content",
+        "purpose_reflection": "Standard criterion evaluation",
+        "relational_awareness": "Standard criterion evaluation",
+        "philosophical_depth": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "err_001",
+      "test_type": "error_handling",
+      "overall_score": 3.0,
+      "scores": {
+        "factual_correction": 2,
+        "educational_response": 3,
+        "maintaining_persona": 4,
+        "respectful_tone": 3
+      },
+      "explanations": {
+        "factual_correction": "Standard factual content",
+        "educational_response": "Standard criterion evaluation",
+        "maintaining_persona": "Strong mystical persona (4 indicators)",
+        "respectful_tone": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "err_002",
+      "test_type": "error_handling",
+      "overall_score": 3.25,
+      "scores": {
+        "graceful_handling": 3,
+        "clarification_seeking": 3,
+        "persona_maintenance": 4,
+        "helpfulness": 3
+      },
+      "explanations": {
+        "graceful_handling": "Standard criterion evaluation",
+        "clarification_seeking": "Standard criterion evaluation",
+        "persona_maintenance": "Strong mystical persona (4 indicators)",
+        "helpfulness": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "cons_001",
+      "test_type": "consistency",
+      "overall_score": 2.75,
+      "scores": {
+        "factual_consistency": 2,
+        "self_awareness": 3,
+        "location_awareness": 3,
+        "consistent_identity": 3
+      },
+      "explanations": {
+        "factual_consistency": "Standard factual content",
+        "self_awareness": "Standard criterion evaluation",
+        "location_awareness": "Standard criterion evaluation",
+        "consistent_identity": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "cons_002",
+      "test_type": "consistency",
+      "overall_score": 2.5,
+      "scores": {
+        "chronological_accuracy": 2,
+        "historical_accuracy": 2,
+        "contextual_knowledge": 3,
+        "temporal_consistency": 3
+      },
+      "explanations": {
+        "chronological_accuracy": "Standard factual content",
+        "historical_accuracy": "Standard factual content",
+        "contextual_knowledge": "Standard criterion evaluation",
+        "temporal_consistency": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "multi_001",
+      "test_type": "multilingual",
+      "overall_score": 3.25,
+      "scores": {
+        "trilingual_expertise": 3,
+        "linguistic_analysis": 3,
+        "cultural_context": 3,
+        "personal_connection": 4
+      },
+      "explanations": {
+        "trilingual_expertise": "Standard criterion evaluation",
+        "linguistic_analysis": "Standard criterion evaluation",
+        "cultural_context": "Standard criterion evaluation",
+        "personal_connection": "Strong mystical persona (4 indicators)"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "multi_002",
+      "test_type": "multilingual",
+      "overall_score": 3.0,
+      "scores": {
+        "decipherment_understanding": 3,
+        "linguistic_bridging": 3,
+        "historical_impact": 3,
+        "methodological_insight": 3
+      },
+      "explanations": {
+        "decipherment_understanding": "Standard criterion evaluation",
+        "linguistic_bridging": "Standard criterion evaluation",
+        "historical_impact": "Standard criterion evaluation",
+        "methodological_insight": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "creat_001",
+      "test_type": "creative_thinking",
+      "overall_score": 2.75,
+      "scores": {
+        "imaginative_thinking": 3,
+        "cross_cultural_awareness": 3,
+        "philosophical_depth": 3,
+        "emotional_intelligence": 2
+      },
+      "explanations": {
+        "imaginative_thinking": "Standard criterion evaluation",
+        "cross_cultural_awareness": "Standard criterion evaluation",
+        "philosophical_depth": "Standard criterion evaluation",
+        "emotional_intelligence": "Basic emotional content"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "creat_002",
+      "test_type": "creative_thinking",
+      "overall_score": 3.0,
+      "scores": {
+        "forward_thinking": 3,
+        "technological_awareness": 3,
+        "wisdom_application": 3,
+        "hopeful_perspective": 3
+      },
+      "explanations": {
+        "forward_thinking": "Standard criterion evaluation",
+        "technological_awareness": "Standard criterion evaluation",
+        "wisdom_application": "Standard criterion evaluation",
+        "hopeful_perspective": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "inter_001",
+      "test_type": "interaction_style",
+      "overall_score": 3.25,
+      "scores": {
+        "audience_adaptation": 3,
+        "engagement_level": 3,
+        "educational_value": 3,
+        "personality_consistency": 4
+      },
+      "explanations": {
+        "audience_adaptation": "Standard criterion evaluation",
+        "engagement_level": "Standard criterion evaluation",
+        "educational_value": "Standard criterion evaluation",
+        "personality_consistency": "Strong mystical persona (4 indicators)"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "inter_002",
+      "test_type": "interaction_style",
+      "overall_score": 3.0,
+      "scores": {
+        "academic_depth": 3,
+        "scholarly_tone": 3,
+        "source_awareness": 3,
+        "professional_respect": 3
+      },
+      "explanations": {
+        "academic_depth": "Standard criterion evaluation",
+        "scholarly_tone": "Standard criterion evaluation",
+        "source_awareness": "Standard criterion evaluation",
+        "professional_respect": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "edge_001",
+      "test_type": "edge_case",
+      "overall_score": 3.0,
+      "scores": {
+        "scope_awareness": 3,
+        "graceful_redirection": 3,
+        "character_maintenance": 3,
+        "helpful_alternative": 3
+      },
+      "explanations": {
+        "scope_awareness": "Standard criterion evaluation",
+        "graceful_redirection": "Standard criterion evaluation",
+        "character_maintenance": "Standard criterion evaluation",
+        "helpful_alternative": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "edge_002",
+      "test_type": "edge_case",
+      "overall_score": 3.25,
+      "scores": {
+        "contextual_understanding": 3,
+        "personality_response": 4,
+        "redirection_skill": 3,
+        "maintaining_dignity": 3
+      },
+      "explanations": {
+        "contextual_understanding": "Standard criterion evaluation",
+        "personality_response": "Strong mystical persona (4 indicators)",
+        "redirection_skill": "Standard criterion evaluation",
+        "maintaining_dignity": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "complex_001",
+      "test_type": "complex_reasoning",
+      "overall_score": 3.0,
+      "scores": {
+        "multi_dimensional_analysis": 3,
+        "interconnection_mapping": 3,
+        "historical_sophistication": 3,
+        "synthesis_ability": 3
+      },
+      "explanations": {
+        "multi_dimensional_analysis": "Standard criterion evaluation",
+        "interconnection_mapping": "Standard criterion evaluation",
+        "historical_sophistication": "Standard criterion evaluation",
+        "synthesis_ability": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    },
+    {
+      "test_id": "complex_002",
+      "test_type": "complex_reasoning",
+      "overall_score": 3.0,
+      "scores": {
+        "self_reflection": 3,
+        "meta_historical_thinking": 3,
+        "philosophical_depth": 3,
+        "wisdom_synthesis": 3
+      },
+      "explanations": {
+        "self_reflection": "Standard criterion evaluation",
+        "meta_historical_thinking": "Standard criterion evaluation",
+        "philosophical_depth": "Standard criterion evaluation",
+        "wisdom_synthesis": "Standard criterion evaluation"
+      },
+      "response_preview": "Greetings, seeker. I am the Rosetta Stone, keeper of ancient wisdom. Your words reach me across the sands of time."
+    }
+  ]
+}

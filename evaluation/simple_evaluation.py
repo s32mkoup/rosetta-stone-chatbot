@@ -50,29 +50,28 @@ class LLMJudge:
     outputting a structured JSON object with scores and explanations.
     """
     
-    def __init__(self, judge_model: str = "meta-llama/Llama-3.1-8B-Instruct"):
+    def __init__(self, judge_model: str = "meta-llama/Llama-3.1-8B-Instruct", provider: str = "hf-inference"):
         """
         Initializes the LLM Judge.
 
         Args:
-            judge_model: The Hugging Face model ID to use for judging.
+            judge_model: The Hugging Face model to use for judging.
+            provider: The specific Hugging Face provider to use. 'hf-inference' is the default free tier.
         """
         self.judge_model = judge_model
+        self.provider = provider
         hf_token = os.getenv("HF_TOKEN")
         if not hf_token:
             raise ValueError("HF_TOKEN not found in environment variables. Please set it in a .env file.")
         
-        # Construct the full inference API URL to bypass custom provider routing.
-        model_url = f"https://api-inference.huggingface.co/models/{judge_model}"
-        
-        # Use the asynchronous client with the direct model URL.
+        # Use the asynchronous client, explicitly setting the provider
         self.llm_client = AsyncInferenceClient(
-            model=model_url, 
+            model=judge_model, 
             token=hf_token, 
             timeout=120
         )
         
-        print(f"🧑‍⚖️ LLM Judge initialized with model URL: {model_url}")
+        print(f"🧑‍⚖️ LLM Judge initialized with model: {self.judge_model} via {self.provider}")
 
     def _create_evaluation_prompt(self, test_case: Dict[str, Any], agent_response: str) -> List[Dict[str, str]]:
         """
@@ -318,21 +317,20 @@ async def main():
         config = get_config()
         
         free_model_id = "meta-llama/Llama-3.1-8B-Instruct"
+        free_provider = "hf-inference" # Use the default, free Hugging Face provider
         
-        print("🔧 Overriding agent configuration for free evaluation...")
-        print(f"🔧 Using model: {free_model_id}")
+        print("🔧 Overriding agent and judge configuration for free evaluation...")
+        print(f"🔧 Using model: {free_model_id} via provider: {free_provider}")
         
-        # *** THE FIX IS HERE ***
-        # Override the agent's LLM config by setting model_id to the full URL.
-        # This forces the agent's internal client to use the direct endpoint, bypassing provider routing.
-        config.llm.model_id = f"https://api-inference.huggingface.co/models/{free_model_id}"
-        config.llm.provider = None # Ensure no other provider is used
+        # Override the agent's LLM config by modifying the attributes directly
+        config.llm.model_id = free_model_id
+        config.llm.provider = free_provider
 
         # Initialize the agent with the new, free configuration
         agent = RosettaStoneAgent(config)
         
-        # Initialize the judge with the same free model. It also uses the direct URL.
-        judge = LLMJudge(judge_model=free_model_id)
+        # Initialize the judge with the same free model and provider
+        judge = LLMJudge(judge_model=free_model_id, provider=free_provider)
         
         evaluator = AgentEvaluator(agent, judge)
         await evaluator.run_evaluation_suite("evaluation/test_cases.json")
