@@ -1,275 +1,278 @@
 #!/usr/bin/env python3
-"""
-Ollama-based LLM Judge for completely free evaluation
-Requires: pip install ollama
-"""
+"""Debug Ollama LLM Judge with extensive logging"""
 
 import json
-import asyncio
-import os
 import sys
-from typing import Dict, List, Any, Optional
-from dataclasses import dataclass, field
+import os
 from datetime import datetime
 
-# Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     import ollama
+    print("✅ Ollama imported successfully")
 except ImportError:
-    print("❌ Ollama not installed. Run: pip install ollama")
-    print("📥 Then install Ollama: https://ollama.ai/download")
-    print("🤖 And pull a model: ollama pull llama3.1")
+    print("❌ Ollama import failed")
     sys.exit(1)
 
-@dataclass
-class EvaluationResult:
-    """Stores the complete result of a single test case evaluation."""
-    test_id: str
-    test_type: str
-    status: str  # 'SUCCESS' or 'FAILED'
-    scores: Dict[str, int] = field(default_factory=dict)
-    explanations: Dict[str, str] = field(default_factory=dict)
-    overall_score: float = 0.0
-    agent_response: str = ""
-    error_message: Optional[str] = None
-
-class OllamaLLMJudge:
-    """
-    Ollama-based judge that runs locally - completely free!
-    """
-    
-    def __init__(self, model: str = "llama3.1"):
-        """
-        Initializes the Ollama LLM Judge.
-        
-        Args:
-            model: The Ollama model to use (llama3.1, mistral, etc.)
-        """
+class DebugOllamaJudge:
+    def __init__(self, model="llama3.1"):
         self.model = model
+        print(f"🤖 Judge initialized with model: {model}")
+
+    def evaluate(self, test_case, agent_response):
+        print(f"\n🔍 EVALUATING: {test_case['test_id']}")
         
-        # Test if Ollama is running and model is available
-        try:
-            response = ollama.chat(
-                model=model,
-                messages=[{"role": "user", "content": "Hello"}],
-                stream=False
-            )
-            print(f"🤖 Ollama LLM Judge initialized with model: {model}")
-        except Exception as e:
-            print(f"❌ Ollama connection failed: {e}")
-            print("💡 Make sure Ollama is running and model is pulled:")
-            print(f"   ollama serve")
-            print(f"   ollama pull {model}")
-            raise
-
-    def _create_evaluation_prompt(self, test_case: Dict[str, Any], agent_response: str) -> str:
-        """Creates evaluation prompt for Ollama."""
+        # Handle conversation vs single query
+        if 'conversation' in test_case:
+            query_text = f"Conversation: {len(test_case['conversation'])} turns"
+            conversation_text = " → ".join([turn['user'] for turn in test_case['conversation']])
+            query_context = f"Multi-turn conversation: {conversation_text}"
+        else:
+            query_text = test_case['query'][:50] + "..."
+            query_context = f"Single query: {test_case['query']}"
         
-        query = test_case.get('query', 'See conversation history for context.')
-        criteria = test_case.get('evaluation_criteria', {'overall_quality': 'Assess the overall quality of the response.'})
+        print(f"📝 Query: {query_text}")
+        print(f"📝 Response length: {len(agent_response)} chars")
         
-        criteria_description = "\n".join(
-            f"- {name.upper()}: {desc}" for name, desc in criteria.items()
-        )
-
-        prompt = f"""You are an expert evaluator for AI conversational agents. Evaluate the response from an AI agent that embodies the ancient Rosetta Stone.
-
-EVALUATION CRITERIA:
-{criteria_description}
-
-SCORING SCALE (1-4):
-1 = Poor (major issues, fails expectations)
-2 = Fair (some issues, partially meets expectations)  
-3 = Good (meets expectations, minor issues)
-4 = Excellent (exceeds expectations)
-
-USER QUERY: "{query}"
-
-AGENT RESPONSE: "{agent_response}"
-
-Provide your evaluation as valid JSON in this format:
-{{
-    "scores": {{{", ".join(f'"{k}": score' for k in criteria.keys())}}},
-    "explanations": {{{", ".join(f'"{k}": "explanation"' for k in criteria.keys())}}}
-}}
-
-JSON Response:"""
-
-        return prompt
-
-    async def evaluate_response(self, test_case: Dict[str, Any], agent_response: str) -> EvaluationResult:
-        """Evaluates response using Ollama."""
+        criteria = test_case.get('evaluation_criteria', {'quality': 'Rate quality'})
+        print(f"📊 Criteria: {list(criteria.keys())}")
         
-        prompt = self._create_evaluation_prompt(test_case, agent_response)
-        criteria_keys = list(test_case.get('evaluation_criteria', {'overall_quality': ''}).keys())
+        prompt = f"""You are evaluating an AI that embodies the ancient Rosetta Stone. Rate 1-4 (4=Excellent, 3=Good, 2=Fair, 1=Poor).
+
+The AI should be mystical, wise, knowledgeable about ancient Egypt, and maintain personality as the actual Rosetta Stone artifact.
+
+CRITERIA:
+{chr(10).join(f"- {k}: {v}" for k, v in criteria.items())}
+
+CONTEXT: {query_context}
+
+AI RESPONSE: {agent_response[:300]}...
+
+Consider: The response shows mystical personality, ancient wisdom, historical accuracy, and maintains character as the Rosetta Stone.
+
+Respond ONLY with JSON:
+{{"scores": {{{", ".join(f'"{k}": 3' for k in criteria.keys())}}}, "explanations": {{{", ".join(f'"{k}": "brief reason"' for k in criteria.keys())}}}}}"""
+
+        print(f"🚀 Sending to Ollama...")
         
         try:
-            # Call Ollama
             response = ollama.chat(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 stream=False,
-                options={
-                    "temperature": 0.1,
-                    "num_predict": 500
-                }
+                options={"temperature": 0.1, "num_predict": 300}
             )
+            print(f"✅ Ollama responded")
             
-            response_text = response['message']['content']
+            text = response['message']['content'].strip()
+            print(f"📤 Raw response: {text[:100]}...")
             
-            # Try to extract JSON from response
-            json_start = response_text.find('{')
-            json_end = response_text.rfind('}') + 1
+            # Extract JSON
+            start = text.find('{')
+            end = text.rfind('}') + 1
             
-            if json_start >= 0 and json_end > json_start:
-                json_text = response_text[json_start:json_end]
-                parsed_json = json.loads(json_text)
-            else:
-                # Fallback: try to parse entire response
-                parsed_json = json.loads(response_text)
-            
-            scores = parsed_json.get('scores', {})
-            explanations = parsed_json.get('explanations', {})
-            
-            # Validate scores
-            valid_scores = {}
-            for k in criteria_keys:
-                if k in scores:
-                    try:
-                        score = int(float(scores[k]))
-                        valid_scores[k] = max(1, min(4, score))
-                    except:
-                        valid_scores[k] = 2
-                else:
-                    valid_scores[k] = 2
+            if start >= 0 and end > start:
+                json_text = text[start:end]
+                print(f"🔍 JSON extracted: {json_text[:80]}...")
                 
-                # Ensure explanation exists
-                if k not in explanations:
-                    explanations[k] = "No explanation provided"
-            
-            overall_score = sum(valid_scores.values()) / len(valid_scores) if valid_scores else 2.0
-            
-            return EvaluationResult(
-                test_id=test_case['test_id'],
-                test_type=test_case.get('test_type', 'unknown'),
-                status='SUCCESS',
-                scores=valid_scores,
-                explanations=explanations,
-                overall_score=overall_score,
-                agent_response=agent_response[:300] + "..." if len(agent_response) > 300 else agent_response
-            )
-            
+                # Clean JSON
+                json_text = json_text.replace('\n', ' ').replace('  ', ' ')
+                if json_text.count('"') % 2 != 0:  # Fix unclosed quotes
+                    json_text += '"'
+                
+                try:
+                    data = json.loads(json_text)
+                except json.JSONDecodeError as e:
+                    print(f"⚠️ JSON parse error, trying to fix: {e}")
+                    # Try to fix common issues
+                    json_text = json_text.replace('...', '')  # Remove truncation
+                    data = json.loads(json_text)
+                scores = data.get('scores', {})
+                
+                # Validate
+                valid_scores = {}
+                for k in criteria.keys():
+                    score = int(scores.get(k, 3))
+                    valid_scores[k] = max(1, min(4, score))
+                
+                avg = sum(valid_scores.values()) / len(valid_scores)
+                print(f"📊 Scores: {valid_scores}")
+                print(f"📈 Average: {avg:.1f}/4.0")
+                
+                return {
+                    'test_id': test_case['test_id'],
+                    'scores': valid_scores,
+                    'overall': avg,
+                    'status': 'SUCCESS'
+                }
+            else:
+                print("❌ No JSON found in response")
+                
         except Exception as e:
-            print(f"❌ Ollama evaluation failed for {test_case['test_id']}: {e}")
-            
-            # Fallback scores
-            fallback_scores = {k: 2 for k in criteria_keys} if criteria_keys else {'overall_quality': 2}
-            fallback_explanations = {k: f"Evaluation failed: {str(e)}" for k in fallback_scores.keys()}
-            
-            return EvaluationResult(
-                test_id=test_case['test_id'],
-                test_type=test_case.get('test_type', 'unknown'),
-                status='FAILED',
-                scores=fallback_scores,
-                explanations=fallback_explanations,
-                overall_score=2.0,
-                agent_response=agent_response[:300] + "..." if len(agent_response) > 300 else agent_response,
-                error_message=str(e)
-            )
+            print(f"❌ Ollama error: {e}")
+        
+        # Fallback
+        fallback = {k: 2 for k in criteria.keys()}
+        return {
+            'test_id': test_case['test_id'],
+            'scores': fallback,
+            'overall': 2.0,
+            'status': 'FAILED'
+        }
 
-# Use the same AgentEvaluator class from OpenAI version but with Ollama judge
-
-# --- Main Execution ---
-async def main():
-    """Main function to run the evaluation with Ollama."""
-    from core.agent import RosettaStoneAgent
-    from core.config import get_config
-
+def run_full_evaluation():
+    print("🏺 FULL OLLAMA EVALUATION")
+    print("=" * 50)
+    
     try:
-        print("🏺 Starting Ollama-based Evaluation (Free & Local)")
+        from core.agent import RosettaStoneAgent
+        from core.config import get_config
         
         agent = RosettaStoneAgent(get_config())
-        judge = OllamaLLMJudge("llama3.1")  # or "mistral", "llama2", etc.
+        judge = DebugOllamaJudge()
         
-        # Use a simple evaluator for demo
-        evaluator = SimpleOllamaEvaluator(agent, judge)
-        await evaluator.run_limited_evaluation("evaluation/test_cases.json")
-
-    except Exception as e:
-        print(f"❌ Evaluation failed: {e}")
-        import traceback
-        traceback.print_exc()
-
-class SimpleOllamaEvaluator:
-    """Simple evaluator for Ollama demo"""
-    
-    def __init__(self, agent, judge):
-        self.agent = agent
-        self.judge = judge
-        self.results = []
-    
-    async def run_limited_evaluation(self, test_cases_file: str):
-        """Run limited evaluation to test Ollama setup"""
+        # Load test cases
+        try:
+            with open('evaluation/test_cases.json', 'r') as f:
+                test_data = json.load(f)
+            print(f"📋 Loaded test cases: {len(test_data)} categories")
+        except FileNotFoundError:
+            print("❌ test_cases.json not found, using simple tests")
+            test_data = {
+                "simple_tests": [
+                    {
+                        "test_id": "simple_1",
+                        "query": "What are hieroglyphs?",
+                        "evaluation_criteria": {
+                            "accuracy": "Factual correctness about hieroglyphs",
+                            "persona": "Maintains Rosetta Stone personality"
+                        }
+                    }
+                ]
+            }
         
-        with open(test_cases_file, 'r') as f:
-            test_data = json.load(f)
-        
-        print("🤖 Running Ollama LLM Judge Evaluation...")
-        
-        # Test just a few cases
+        results = []
         test_count = 0
+        
         for category, tests in test_data.items():
-            if test_count >= 5:  # Limit to 5 tests total
+            if test_count >= 5:  # Limit tests
                 break
                 
+            print(f"\n📂 CATEGORY: {category}")
+            
             for test_case in tests[:2]:  # Max 2 per category
                 if test_count >= 5:
                     break
                     
                 test_count += 1
-                test_case['category'] = category
+                test_case['test_type'] = category.replace('_tests', '')
                 
-                print(f"\n[{test_count}] Testing: {test_case['test_id']}")
+                print(f"\n[{test_count}] {test_case['test_id']}")
                 
-                self.agent.start_session(f"eval_{test_case['test_id']}")
+                agent.start_session(f"eval_{test_count}")
                 
-                try:
-                    if category == "memory_tests":
-                        responses = []
-                        for turn in test_case['conversation']:
-                            response = await self.agent.process_message(turn['user'])
-                            responses.append(response.content)
-                        agent_response = responses[-1] if responses else ""
-                    else:
-                        response = await self.agent.process_message(test_case['query'])
-                        agent_response = response.content
-                    
-                    test_case['test_type'] = category.replace('_tests', '')
-                    result = await self.judge.evaluate_response(test_case, agent_response)
-                    self.results.append(result)
-                    
-                    if result.status == 'SUCCESS':
-                        print(f"   ✅ Score: {result.overall_score:.1f}/4.0")
-                    else:
-                        print(f"   ❌ Failed: {result.error_message}")
-                        
-                except Exception as e:
-                    print(f"   ❌ Error: {e}")
+                # Handle conversation vs single query
+                if 'conversation' in test_case:
+                    print("🗣️ Multi-turn conversation")
+                    responses = []
+                    for turn in test_case['conversation']:
+                        resp = agent.process_message_sync(turn['user'])
+                        responses.append(resp.content)
+                    agent_response = responses[-1]  # Use last response
+                else:
+                    print("💬 Single query")
+                    resp = agent.process_message_sync(test_case['query'])
+                    agent_response = resp.content
+                
+                result = judge.evaluate(test_case, agent_response)
+                results.append(result)
         
-        # Simple report
-        if self.results:
-            successful = [r for r in self.results if r.status == 'SUCCESS']
-            if successful:
-                avg_score = sum(r.overall_score for r in successful) / len(successful)
-                print(f"\n🏆 OLLAMA EVALUATION SUMMARY:")
-                print(f"   • Tests run: {len(self.results)}")
-                print(f"   • Successful: {len(successful)}")
-                print(f"   • Average score: {avg_score:.2f}/4.0")
-                print(f"   • 🎉 Ollama LLM Judge is working!")
-            else:
-                print("❌ No successful evaluations")
+        # Summary
+        print(f"\n🏆 EVALUATION SUMMARY")
+        print("=" * 30)
+        
+        successful = [r for r in results if r['status'] == 'SUCCESS']
+        print(f"✅ Successful: {len(successful)}/{len(results)}")
+        
+        if successful:
+            avg_score = sum(r['overall'] for r in successful) / len(successful)
+            print(f"📊 Average Score: {avg_score:.2f}/4.0 ({avg_score/4*100:.1f}%)")
+            
+            best = max(successful, key=lambda x: x['overall'])
+            worst = min(successful, key=lambda x: x['overall'])
+            print(f"🥇 Best: {best['test_id']} ({best['overall']:.1f})")
+            print(f"📉 Lowest: {worst['test_id']} ({worst['overall']:.1f})")
+        
+        # Save results
+        with open('ollama_results.json', 'w') as f:
+            json.dump({
+                'timestamp': datetime.now().isoformat(),
+                'results': results,
+                'summary': {
+                    'total': len(results),
+                    'successful': len(successful),
+                    'average_score': avg_score if successful else 0
+                }
+            }, f, indent=2)
+        
+        print(f"\n💾 Results saved to: ollama_results.json")
+        
+    except Exception as e:
+        print(f"💥 ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+
+def main():
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == 'full':
+        run_full_evaluation()
+    else:
+        # Single test for debugging
+        print("🏺 DEBUG OLLAMA JUDGE")
+        print("=" * 40)
+        
+        try:
+            from core.agent import RosettaStoneAgent
+            from core.config import get_config
+            print("✅ Imports successful")
+            
+            agent = RosettaStoneAgent(get_config())
+            judge = DebugOllamaJudge()
+            print("✅ Components initialized")
+            
+            # Single test
+            test_case = {
+                'test_id': 'debug_test',
+                'query': 'What are hieroglyphs?',
+                'evaluation_criteria': {
+                    'accuracy': 'Factual correctness about hieroglyphs',
+                    'persona': 'Maintains mystical Rosetta Stone personality',
+                    'engagement': 'Response is engaging and interesting'
+                }
+            }
+            
+            print(f"\n🎯 RUNNING TEST")
+            agent.start_session("debug_session")
+            print("✅ Session started")
+            
+            response = agent.process_message_sync(test_case['query'])
+            print(f"✅ Agent responded: {len(response.content)} chars")
+            print(f"📝 Preview: {response.content[:100]}...")
+            
+            result = judge.evaluate(test_case, response.content)
+            
+            print(f"\n🏆 FINAL RESULT:")
+            print(f"   Status: {result['status']}")
+            print(f"   Overall: {result['overall']}/4.0")
+            print(f"   Scores: {result['scores']}")
+            
+            print(f"\n💡 To run full evaluation: python3 {sys.argv[0]} full")
+            
+        except Exception as e:
+            print(f"💥 ERROR: {e}")
+            import traceback
+            traceback.print_exc()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

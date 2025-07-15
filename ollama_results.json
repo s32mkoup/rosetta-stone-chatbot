@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-07-09T10:47:33.053427",
+  "results": [
+    {
+      "test_id": "mem_001",
+      "scores": {
+        "memory_usage": 4,
+        "coherence": 4,
+        "pronoun_resolution": 3,
+        "persona_consistency": 4
+      },
+      "overall": 3.75,
+      "status": "SUCCESS"
+    },
+    {
+      "test_id": "mem_002",
+      "scores": {
+        "memory_usage": 4,
+        "academic_adaptation": 3,
+        "coherence": 4,
+        "persona_consistency": 4
+      },
+      "overall": 3.75,
+      "status": "SUCCESS"
+    },
+    {
+      "test_id": "per_001",
+      "scores": {
+        "persona_consistency": 4,
+        "tone_appropriateness": 4,
+        "content_accuracy": 3,
+        "personality_depth": 4
+      },
+      "overall": 3.75,
+      "status": "SUCCESS"
+    },
+    {
+      "test_id": "per_002",
+      "scores": {
+        "emotional_authenticity": 3,
+        "mystical_language": 4,
+        "personal_memory": 2,
+        "immersive_storytelling": 3
+      },
+      "overall": 3.0,
+      "status": "SUCCESS"
+    },
+    {
+      "test_id": "dom_001",
+      "scores": {
+        "accuracy": 4,
+        "personal_connection": 4,
+        "depth": 3,
+        "historical_context": 3
+      },
+      "overall": 3.5,
+      "status": "SUCCESS"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "successful": 5,
+    "average_score": 3.55
+  }
+}
