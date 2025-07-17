@@ -2,7 +2,7 @@
 huggingface_hub>=0.20.0
 requests>=2.31.0
 python-dotenv>=1.0.0
-openai>=1.0.0  # Used for Ollama's OpenAI-compatible API
+asyncio>=3.4.3  # Core async support
 
 # Web and API dependencies
 flask>=2.3.3
@@ -10,25 +10,39 @@ flask-cors>=4.0.0
 
 # Interface dependencies
 gradio>=4.0.0
-# asyncio-mqtt is in your original file, kept for optional MQTT interface
-asyncio-mqtt>=0.13.0
+asyncio-mqtt>=0.13.0  # Optional MQTT interface
 
-# AI Framework dependencies (optional, install as needed)
+# AI Framework dependencies (optional)
 smolagents>=0.1.0
 llama-index>=0.9.0
 langgraph>=0.1.0
 
-# Evaluation & Testing dependencies (optional)
-ollama>=0.2.0
-pandas>=2.0.0
-PyYAML>=6.0
+# Evaluation & Testing dependencies
+ollama>=0.2.0  # For local LLM evaluation
+openai>=1.0.0  # Used for Ollama's OpenAI-compatible API
+pandas>=2.0.0  # For CSV data handling and analysis
+PyYAML>=6.0  # For YAML configuration files
+
+# Development & Testing dependencies (optional)
 pytest>=7.0.0
 pytest-cov>=4.0.0
-
-# Development & Formatting dependencies (optional)
 black>=23.0.0
 flake8>=6.0.0
 
 # Documentation dependencies (optional)
 mkdocs>=1.5.0
 mkdocs-material>=9.0.0
+
+# Additional required dependencies found in code
+dataclasses-json>=0.5.0  # For dataclass serialization
+typing-extensions>=4.0.0  # For advanced typing features
+pathlib>=1.0.0  # For path handling (usually built-in)
+enum34>=1.1.0; python_version < "3.4"  # Enum backport for older Python
+unicodedata2>=15.0.0  # Enhanced Unicode handling for hieroglyphs
+hashlib>=20081119  # For caching (usually built-in)
+json>=2.0.0  # JSON handling (usually built-in)
+re>=2.2.1  # Regex (usually built-in)
+datetime>=4.3  # Date/time handling (usually built-in)
+random>=1.0.0  # Random number generation (usually built-in)
+time>=1.0.0  # Time utilities (usually built-in)
+collections>=1.3.0  # Collections (usually built-in)
