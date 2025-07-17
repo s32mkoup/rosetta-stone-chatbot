@@ -39,7 +39,7 @@ typing-extensions>=4.0.0  # For advanced typing features
 pathlib>=1.0.0  # For path handling (usually built-in)
 enum34>=1.1.0; python_version < "3.4"  # Enum backport for older Python
 unicodedata2>=15.0.0  # Enhanced Unicode handling for hieroglyphs
-hashlib>=20081119  # For caching (usually built-in)
+
 json>=2.0.0  # JSON handling (usually built-in)
 re>=2.2.1  # Regex (usually built-in)
 datetime>=4.3  # Date/time handling (usually built-in)
