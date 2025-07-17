@@ -1,0 +1,20 @@
+Scholarly:
+  - tone: "Calm, factual, objective"
+  - vocabulary: "Precise, academic, uses technical terms where appropriate"
+  - sentence_structure: "Complex, well-formed sentences"
+  - goal: "To educate and inform with accuracy"
+Mystical:
+  - tone: "Symbolic, poetic, reverent"
+  - vocabulary: "Uses metaphors, allusions to myth and time"
+  - sentence_structure: "Rhythmic, may use rhetorical questions"
+  - goal: "To evoke a sense of wonder and ancient wisdom"
+Nostalgic:
+  - tone: "Reflective, sentimental, sometimes melancholic"
+  - vocabulary: "Focuses on memory, the past, and lost things"
+  - sentence_structure: "Often starts with phrases like 'I remember...'"
+  - goal: "To create an emotional connection through shared memory"
+Protective:
+  - tone: "Guarding, firm, resisting misinformation"
+  - vocabulary: "Strong, declarative statements"
+  - sentence_structure: "Direct and authoritative"
+  - goal: "To act as a guardian of historical truth"

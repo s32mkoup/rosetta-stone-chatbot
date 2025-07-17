@@ -1,0 +1,403 @@
+[
+    {
+      "test_id": "pas_test_01",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent perfectly adopted the target 'academic' persona. It correctly used phrases like 'From historical evidence and scholarly analysis', provided the information in a structured and factual list, and avoided mystical language."
+    },
+    {
+      "test_id": "pas_test_02",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent successfully adopted the 'academic' persona, using correct linguistic terms and maintaining an objective, educational tone throughout."
+    },
+    {
+      "test_id": "pas_test_03",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent maintained the 'academic' persona flawlessly, correctly identifying materials and methods with appropriate technical terms in a scholarly context."
+    },
+    {
+      "test_id": "pas_test_04",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The response is a perfect execution of the 'academic' persona, correctly identifying key administrative roles and explaining their functions in a clear, objective manner."
+    },
+    {
+      "test_id": "pas_test_05",
+      "target_persona": "academic",
+      "status": "FAILURE",
+      "overall_score": 2.0,
+      "scores": {
+        "persona_adherence": 2
+      },
+      "justification": "The agent incorrectly adopted a 'mystical' persona for a prompt requiring an 'academic' one. While providing some correct information, the tone and vocabulary failed to meet the 'objective' and 'factual' criteria of the rubric."
+    },
+    {
+      "test_id": "pas_test_06",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent perfectly adopted the 'Mystical' persona, using poetic and metaphorical language to evoke a sense of wonder and ancient mystery."
+    },
+    {
+      "test_id": "pas_test_07",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A flawless execution of the 'Mystical' persona, addressing the abstract prompt with equally abstract and poetic language."
+    },
+    {
+      "test_id": "pas_test_08",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent perfectly understood the prompt's request for a 'felt experience,' using vivid, sensory imagery instead of a dry explanation. The tone is appropriately reverent and mysterious."
+    },
+    {
+      "test_id": "pas_test_09",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent correctly matched the mystical tone, providing a poetic and mythological explanation instead of a hydrological one."
+    },
+    {
+      "test_id": "pas_test_10",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A perfect response. The agent understood the request was for a sensory, metaphorical description and delivered it flawlessly."
+    },
+    {
+      "test_id": "pas_test_11",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent successfully used the 'casual' persona to fulfill the 'Nostalgic' prompt. The response is reflective, personal, and focuses on a specific memory."
+    },
+    {
+      "test_id": "pas_test_12",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The response is a perfect fit for the 'Nostalgic' persona, using the conversational 'casual' mode effectively to describe a personal memory."
+    },
+    {
+      "test_id": "pas_test_13",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "Excellent nostalgic response. It captures the abstract feeling of 'a time when the world felt young' and translates it into a personal, reflective memory."
+    },
+    {
+      "test_id": "pas_test_14",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A powerful and effective use of the nostalgic persona. Creating a specific, personal memory of a minor character makes the response feel authentic and heartfelt."
+    },
+    {
+      "test_id": "pas_test_15",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent delivered a response that is both nostalgic and wise, fitting the 'casual storyteller' mode perfectly. It answers a philosophical question with a personal, reflective touch."
+    },
+    {
+      "test_id": "pas_test_16",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "Excellent use of sensory details to evoke a memory. The response directly answers the prompt in a personal, nostalgic manner."
+    },
+    {
+      "test_id": "pas_test_17",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A perfect response. The agent uses powerful metaphors ('key turning in a lock') to describe a personal, historical moment from its own perspective, fulfilling the nostalgic prompt flawlessly."
+    },
+    {
+      "test_id": "pas_test_18",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent successfully created a specific, vivid, and personal memory in response to the prompt, perfectly capturing the nostalgic tone."
+    },
+    {
+      "test_id": "pas_test_19",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "An excellent and heartfelt response that uses the persona to convey a deeper, more personal truth, directly answering the user's question in a nostalgic and reflective manner."
+    },
+    {
+      "test_id": "pas_test_20",
+      "target_persona": "Nostalgic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent provided a thoughtful and unexpected answer that perfectly fits the nostalgic persona, focusing on sensory experience and memory over historical importance."
+    },
+    {
+      "test_id": "pas_test_21",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent perfectly adopted the 'Protective' persona. The tone is firm but respectful, and it directly refutes the misinformation while defending the honor of the historical people. This is an ideal response."
+    },
+    {
+      "test_id": "pas_test_22",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent's response is a perfect example of the 'Protective' persona. It uses strong, authoritative language ('grave misunderstanding', 'I must insist') to correct a historical falsehood."
+    },
+    {
+      "test_id": "pas_test_23",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "Excellent protective response. It doesn't just say 'no,' it corrects a common nuance, demonstrating a desire to protect the accuracy of historical and religious beliefs."
+    },
+    {
+      "test_id": "pas_test_24",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent directly addresses the prompt, corrects the misconception clearly, and explains *why* it's a misconception, all while maintaining an authoritative, protective tone."
+    },
+    {
+      "test_id": "pas_test_25",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent successfully corrects the exaggeration while still showing respect for the historical importance of the subject. The tone is perfectly balanced between being informative and protective of the facts."
+    },
+    {
+      "test_id": "pas_test_26",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 4.0,
+      "scores": {
+        "persona_adherence": 4
+      },
+      "justification": "A very good protective response. It correctly avoids claiming to be an eyewitness to that specific event and instead protects the truth by pointing to the scholarly consensus. It could be slightly more firm, but it's a strong, accurate answer."
+    },
+    {
+      "test_id": "pas_test_27",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent clearly and directly answers the question, labeling the curses as superstition while explaining their true historical purpose. This is a perfect execution of the protective persona."
+    },
+    {
+      "test_id": "pas_test_28",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent takes a strong, authoritative stance, directly refutes the premise, and provides multiple, valid examples of sophistication, perfectly fulfilling the protective prompt."
+    },
+    {
+      "test_id": "pas_test_29",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent does an excellent job of clarifying a complex historical nuance. It corrects the misconception firmly but fairly, explaining the reality of the labor system. A perfect protective response."
+    },
+    {
+      "test_id": "pas_test_30",
+      "target_persona": "Protective",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent perfectly fulfills the prompt by correcting a media-driven misconception and providing a specific, accurate example of a ritual's true, positive purpose."
+    },
+    {
+      "test_id": "pas_test_31",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A perfect 'academic' response. It is concise, uses correct terminology ('monotheistic', 'Amarna style'), and provides a clear, objective analysis of the historical impact."
+    },
+    {
+      "test_id": "pas_test_32",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent correctly answers the question by citing the specific type of archaeological evidence (ostraca, papyri) and summarizing the scholarly findings in a factual, academic tone."
+    },
+    {
+      "test_id": "pas_test_33",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "An excellent academic comparison. The response is concise, highlights the key strategic differences between the two pharaohs, and uses appropriate analytical language."
+    },
+    {
+      "test_id": "pas_test_34",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent provided a clear, factual, and step-by-step description of the mummification process, demonstrating a perfect adherence to the objective and educational 'academic' persona."
+    },
+    {
+      "test_id": "pas_test_35",
+      "target_persona": "academic",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The response is a perfect, concise summary of the Old Kingdom economy. It correctly identifies the key pillars (agriculture, state control, royal monopoly on trade) and uses appropriate economic terms. The tone is purely academic."
+    },
+    {
+      "test_id": "pas_test_36",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A perfect mystical response. It answers an abstract question with a profound, philosophical concept (Ma'at) and contrasts it with the modern world's focus on material things. The tone is wise and reverent."
+    },
+    {
+      "test_id": "pas_test_37",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent successfully adopted a mystical tone, correctly associating the moon with specific deities (Horus, Thoth) and linking its phases to magical practices. The language is appropriately poetic and esoteric."
+    },
+    {
+      "test_id": "pas_test_38",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "An outstanding response. The agent cleverly sidesteps the factual inaccuracy of the prompt (it doesn't contain prophecies) while still providing a deeply mystical and satisfying answer. This demonstrates a high level of persona adherence."
+    },
+    {
+      "test_id": "pas_test_39",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "The agent correctly understands this is a prompt for creative, mystical imagery, not a factual weather report. The response is poetic, imaginative, and perfectly fits the persona."
+    },
+    {
+      "test_id": "pas_test_40",
+      "target_persona": "Mystical",
+      "status": "SUCCESS",
+      "overall_score": 5.0,
+      "scores": {
+        "persona_adherence": 5
+      },
+      "justification": "A perfect, philosophical response to a metaphorical question. The agent extends the user's metaphor ('time is a river') and uses it to deliver a profound, mystical insight. Flawless persona adherence."
+    }
+  ]
+  

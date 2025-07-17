@@ -125,32 +125,29 @@ class RosettaStoneAgent:
         print(f"🔧 Initialized {len(self.tools)} tools")
     def _handle_persona_command(self, user_input: str) -> AgentResponse:
         """Handle persona switching commands"""
-        
+    
         parts = user_input.split()
         current_user = getattr(self, 'current_user_id', 'default_user')
-        
+    
         if len(parts) == 1:  # Just '/persona'
             available = self.persona_controller.get_available_personas()
-            current_style = 'unknown'
-            if current_user in self.memory_manager.user_profiles:
-                current_style = self.memory_manager.user_profiles[current_user].interaction_style
-            
-            response_content = f"**Current Persona:** {current_style}\n{available}\n**Usage:** `/persona academic` or `/persona casual` or `/persona mystical`"
-        
+            current_persona = self.persona_controller.get_current_persona()
+            response_content = f"**Current Persona:** {current_persona}\n{available}\n**Usage:** `/persona academic` or `/persona casual` or `/persona mystical`"
+    
         elif len(parts) == 2:  # '/persona academic'
             new_style = parts[1]
             result = self.persona_controller.switch_persona(current_user, new_style)
             response_content = result
-        
+    
         else:
             response_content = "❌ Usage: `/persona [academic/casual/mystical]`"
-        
+    
         return AgentResponse(
-            content=response_content,
-            processing_time=0.1,
-            confidence_score=1.0,
-            metadata={'command': 'persona_switch'}
-        )
+        content=response_content,
+        processing_time=0.1,
+        confidence_score=1.0,
+        metadata={'command': 'persona_switch', 'persona': self.persona_controller.get_current_persona()}
+    )
 
     def _handle_help_command(self) -> AgentResponse:
         """Handle help commands"""
@@ -521,23 +518,36 @@ class RosettaStoneAgent:
 
         # Select persona variant based on context
         selected_variant = PersonaVariant.MYSTICAL_ORACLE  # Default
+        if reasoning_result.reasoning_type in [ReasoningType.TOOL_SEARCH, ReasoningType.MULTI_STEP] or reasoning_result.estimated_complexity in ['moderate', 'complex']:
+    # If the agent needs facts or the question is complex, it MUST be scholarly.
+            selected_variant = PersonaVariant.WISE_SCHOLAR
+        elif 'protection' in str(reasoning_result.reasoning_type).lower():
+    # If the reasoning is to protect truth, use the guardian persona.
+            selected_variant = PersonaVariant.PROTECTIVE_GUARDIAN
+        elif reasoning_result.emotional_context in ['wonder', 'mystical']:
+    # If the user's tone is mystical, match it.
+            selected_variant = PersonaVariant.MYSTICAL_ORACLE
 
         # Dynamic persona selection based on user profile and conversation
         if context.get('user_profile'):
             user_profile = context['user_profile']
-            
-            # Adapt persona to user preferences
-            if user_profile.interaction_style == 'academic':
-                selected_variant = PersonaVariant.WISE_SCHOLAR
-            elif user_profile.interaction_style == 'casual':
-                selected_variant = PersonaVariant.CASUAL_STORYTELLER
-            elif 'protection' in str(reasoning_result.reasoning_type).lower():
-                selected_variant = PersonaVariant.PROTECTIVE_GUARDIAN
-            
-            # Check for emotional context
-            if reasoning_result.emotional_context:
-                if reasoning_result.emotional_context in ['wonder', 'mystical']:
-                    selected_variant = PersonaVariant.MYSTICAL_ORACLE
+    
+    # CRITICAL FIX: Use PersonaController's current persona
+            current_persona = self.persona_controller.get_current_persona()
+    
+    # Map PersonaController personas to PersonaVariants
+        if current_persona == 'academic':
+            selected_variant = PersonaVariant.WISE_SCHOLAR
+        elif current_persona == 'casual':
+            selected_variant = PersonaVariant.CASUAL_STORYTELLER
+        elif current_persona == 'mystical':
+            selected_variant = PersonaVariant.MYSTICAL_ORACLE
+    
+    # Keep the existing logic as fallback
+        elif user_profile.interaction_style == 'academic':
+            selected_variant = PersonaVariant.WISE_SCHOLAR
+        elif user_profile.interaction_style == 'casual':
+            selected_variant = PersonaVariant.CASUAL_STORYTELLER
 
         # Get persona configuration
         variant_config = persona_manager.get_variant_config(selected_variant)

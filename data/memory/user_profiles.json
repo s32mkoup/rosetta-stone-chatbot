@@ -2,24 +2,24 @@
   "default_user": {
     "user_id": "default_user",
     "first_interaction": "2025-05-30T14:46:54.730339",
-    "last_interaction": "2025-07-08T18:20:21.677806",
-    "total_conversations": 43,
+    "last_interaction": "2025-07-15T18:46:38.795814",
+    "total_conversations": 71,
     "favorite_topics": [
       "ancient_egypt",
       "history",
-      "languages",
       "rosetta_stone",
+      "languages",
       "ptolemy"
     ],
-    "interaction_style": "curious",
+    "interaction_style": "casual",
     "preferred_response_length": "standard",
     "historical_interests": {
-      "ancient_egypt": 41,
-      "ptolemy": 19,
-      "languages": 28,
-      "history": 37,
-      "rosetta_stone": 26,
-      "archaeology": 11
+      "ancient_egypt": 69,
+      "ptolemy": 32,
+      "languages": 41,
+      "history": 64,
+      "rosetta_stone": 45,
+      "archaeology": 18
     },
     "language_preference": "english"
   }

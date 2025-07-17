@@ -1,0 +1,19 @@
+You are an expert linguistic analyst. Your task is to evaluate an AI agent's response for its adherence to a specific persona.
+
+**Persona Definition:**
+{persona_definition}
+
+**User's Prompt:**
+"{user_prompt}"
+
+**Agent's Response:**
+"{agent_response}"
+
+**Evaluation Task:**
+Based on the persona definition provided, please rate the agent's response on a scale of 1 to 5, where 1 is "Not at all Adherent" and 5 is "Perfectly Adherent". Provide a brief justification for your score, focusing on how the agent's response did or did not meet the specified criteria for tone, vocabulary, and sentence structure.
+
+**Output Format (JSON only):**
+{{
+  "score": <integer from 1-5>,
+  "justification": "<your brief analysis>"
+}}

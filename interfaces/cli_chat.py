@@ -389,8 +389,21 @@ The sands of time await your questions...
             self.running = False
         
         else:
-            self._print_colored(f"❌ Unknown command: {command}", CLIColors.FAIL)
-            self._print_colored("Type '/help' for available commands", CLIColors.WARNING)
+    # CRITICAL FIX: Pass unknown commands to agent (for /persona commands)
+            if command.startswith('/persona'):
+                try:
+                    response = await self.agent.process_message(command)
+                    timestamp = ""
+                    if self.show_timestamps:
+                        timestamp = f"[{datetime.now().strftime('%H:%M:%S')}] "
+                    self._print_colored(f"\n{timestamp}🏺 Rosetta Stone:", CLIColors.ANCIENT_GOLD)
+                    self._print_colored(response.content, CLIColors.ENDC)
+                    print()
+                except Exception as e:
+                    self._print_colored(f"❌ Error processing persona command: {e}", CLIColors.FAIL)
+            else:
+                self._print_colored(f"❌ Unknown command: {command}", CLIColors.FAIL)
+                self._print_colored("Type '/help' for available commands", CLIColors.WARNING)
     
     async def _show_status(self):
         """Show detailed status information"""

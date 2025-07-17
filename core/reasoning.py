@@ -95,7 +95,8 @@ class ReasoningEngine:
             initial_analysis = self._enhance_analysis_with_memory(initial_analysis, memory_context, user_input)
     
     # Step 2: Determine reasoning type and tools
-        reasoning_type = self._determine_reasoning_type(user_input, context)
+        reasoning_type = self._determine_reasoning_type(user_input, initial_analysis)
+
 
         tool_decision, tools_needed = self._analyze_tool_requirements(user_input, reasoning_type, context, initial_analysis)
 
@@ -177,33 +178,28 @@ Analyze and respond with JSON:
             return self._fallback_analysis(user_input)
     
     def _determine_reasoning_type(self, user_input: str, analysis: Dict[str, Any]) -> ReasoningType:
-        # Greeting patterns
+    # This is the most important check. If the initial LLM analysis says we need facts,
+    # we MUST use a tool. This fixes the persona selection bug.
+        if analysis.get('requires_factual_info'):
+            if analysis.get('complexity_level') == 'complex':
+                return ReasoningType.MULTI_STEP
+            else:
+                return ReasoningType.TOOL_SEARCH
+
+    # Personal questions about the Stone that don't need facts
+        if analysis.get('requires_personal_response'):
+            return ReasoningType.EMOTIONAL_RESPONSE
+
+    # Handle simple greetings
         if analysis.get('intent') == 'greeting' or any(word in user_input.lower() 
             for word in ['hello', 'hi', 'greetings', 'who are you']):
             return ReasoningType.DIRECT_ANSWER
-        
-        # Simple direct questions (year, date, name questions) - CHECK THIS FIRST
-        simple_patterns = ['what year', 'when did', 'who was', 'where is', 'how many', 'which year']
-        for pattern in simple_patterns:
-            if pattern in user_input.lower():
-                return ReasoningType.DIRECT_ANSWER
-        
-        # Personal questions about the Stone
-        if analysis.get('requires_personal_response') and not analysis.get('requires_factual_info'):
-            return ReasoningType.EMOTIONAL_RESPONSE
-        
-        # Complex factual questions
-        if analysis.get('complexity_level') == 'complex' and analysis.get('requires_factual_info'):
-            return ReasoningType.MULTI_STEP
-        
-        # Simple factual questions
-        if analysis.get('requires_factual_info'):
-            return ReasoningType.TOOL_SEARCH
-        
-        # Unclear or ambiguous questions
+
+    # Ask for clarification if the intent is vague
         if analysis.get('specificity') == 'vague':
             return ReasoningType.CLARIFICATION
-        
+    
+    # If none of the above, default to a direct, conversational answer.
         return ReasoningType.DIRECT_ANSWER
     
     def _analyze_tool_requirements(self, user_input: str, reasoning_type: ReasoningType, 
